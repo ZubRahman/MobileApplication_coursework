@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="MyMauiApp.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:MyMauiApp"
-    Title="MyMauiApp">
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:pages="clr-namespace:MyMauiApp.Views.Pages"
+       x:Class="MyMauiApp.AppShell">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <ShellContent Title="Discover"
+                      Route="games"
+                      ContentTemplate="{DataTemplate pages:GamesPage}" />
 
+        <ShellContent Title="Diary"
+                      Route="diary"
+                      ContentTemplate="{DataTemplate pages:DiaryPage}" />
+
+        <ShellContent Title="Profile"
+                      Route="profile"
+                      ContentTemplate="{DataTemplate pages:ProfilePage}" />
+    </TabBar>
 </Shell>

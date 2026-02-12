@@ -67,6 +67,7 @@ Local:
 
 Remote:
 - SupabaseRatingRepository
+- SupabaseGameLogRepository
 
 Helpers/
 - Converters

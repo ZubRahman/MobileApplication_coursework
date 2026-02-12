@@ -93,7 +93,7 @@ Row Level Security:
 
 1. App always reads from SQLite for UI.
 2. On login:
-   - Pull cloud ratings.
+   - Pull cloud ratings and game logs
    - Merge by Id.
    - Prefer newest UpdatedAt (last-write-wins).
 3. On local change:

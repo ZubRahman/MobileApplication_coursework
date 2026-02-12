@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MyMauiApp.ViewModels;
+using MyMauiApp.Views.Pages;
+
+using Microsoft.Extensions.Logging;
 
 namespace MyMauiApp;
 
@@ -18,7 +21,23 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+		// ViewModels
+		builder.Services.AddTransient<GamesViewModel>();
+		builder.Services.AddTransient<DiaryViewModel>();
+		builder.Services.AddTransient<ProfileViewModel>();
+		builder.Services.AddTransient<AuthViewModel>();
+		builder.Services.AddTransient<GameDetailsViewModel>();
+		builder.Services.AddTransient<EditRatingViewModel>();
+		builder.Services.AddTransient<StatsViewModel>();
+		builder.Services.AddTransient<SyncViewModel>();
 
+		// Pages
+		builder.Services.AddTransient<GamesPage>();
+		builder.Services.AddTransient<DiaryPage>();
+		builder.Services.AddTransient<ProfilePage>();
+		builder.Services.AddTransient<LoginPage>();
+		builder.Services.AddTransient<GameDetailsPage>();
+		builder.Services.AddTransient<EditRatingPage>();
 		return builder.Build();
 	}
 }
