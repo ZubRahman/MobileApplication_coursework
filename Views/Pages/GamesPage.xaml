@@ -5,6 +5,6 @@
              Title="Discover">
     <VerticalStackLayout Padding="16" Spacing="12">
         <Label Text="Discover" FontSize="24" />
-        <Label Text="TODO: Game list" />
+        <Label Text="TODO: CollectionView of games" />
     </VerticalStackLayout>
 </ContentPage>

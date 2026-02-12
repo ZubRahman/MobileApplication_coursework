@@ -8,11 +8,9 @@
         <ShellContent Title="Discover"
                       Route="games"
                       ContentTemplate="{DataTemplate pages:GamesPage}" />
-
         <ShellContent Title="Diary"
                       Route="diary"
                       ContentTemplate="{DataTemplate pages:DiaryPage}" />
-
         <ShellContent Title="Profile"
                       Route="profile"
                       ContentTemplate="{DataTemplate pages:ProfilePage}" />

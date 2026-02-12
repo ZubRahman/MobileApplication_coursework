@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMauiApp.Views.Pages.EditRatingPage"
-             Title="Discover">
+             Title="Edit Rating">
     <VerticalStackLayout Padding="16" Spacing="12">
-        <Label Text="Discover" FontSize="24" />
-        <Label Text="TODO: Game list" />
+        <Label Text="Edit Rating" FontSize="24" />
+        <Label Text="TODO: rating control + review" />
     </VerticalStackLayout>
 </ContentPage>

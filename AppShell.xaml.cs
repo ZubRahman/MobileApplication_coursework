@@ -1,4 +1,5 @@
 ﻿using MyMauiApp.Views.Pages;
+
 namespace MyMauiApp;
 
 public partial class AppShell : Shell
