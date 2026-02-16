@@ -1,5 +1,7 @@
 ﻿using MyMauiApp.ViewModels;
 using MyMauiApp.Views.Pages;
+using MyMauiApp.Services.Interfaces;
+using MyMauiApp.Services;
 
 using Microsoft.Extensions.Logging;
 
@@ -38,6 +40,9 @@ public static class MauiProgram
 		builder.Services.AddTransient<LoginPage>();
 		builder.Services.AddTransient<GameDetailsPage>();
 		builder.Services.AddTransient<EditRatingPage>();
+
+		// Services
+		builder.Services.AddSingleton<IGameCatalogService, GameCatalogService>();
 		return builder.Build();
 	}
 }

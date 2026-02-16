@@ -3,8 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMauiApp.Views.Pages.GamesPage"
              Title="Discover">
-    <VerticalStackLayout Padding="16" Spacing="12">
-        <Label Text="Discover" FontSize="24" />
-        <Label Text="TODO: CollectionView of games" />
-    </VerticalStackLayout>
+    <VerticalStackLayout Padding="10">
+        <CollectionView ItemsSource="{Binding Games}">
+    <CollectionView.ItemTemplate>
+        <DataTemplate>
+            <VerticalStackLayout Padding="12">
+                <Label Text="{Binding Title}" FontSize="18" />
+                <Label Text="{Binding Platform}" FontSize="12" />
+            </VerticalStackLayout>
+        </DataTemplate>
+    </CollectionView.ItemTemplate>
+</CollectionView>
+
+
+</VerticalStackLayout>
+
 </ContentPage>
