@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using MyMauiApp.Models;
 using MyMauiApp.Services.Interfaces;
+using System.Windows.Input;
 
 namespace MyMauiApp.ViewModels;
 
@@ -27,8 +28,20 @@ public class GamesViewModel : BaseViewModel
     public GamesViewModel(IGameCatalogService gameService)
     {
         _gameService = gameService;
+        OpenDetailsCommand = new Command<Game>(async (game) => await OpenDetails(game));
         _ = LoadGames();
     }
+
+    public ICommand OpenDetailsCommand { get; }
+
+    private async Task OpenDetails(Game? game)
+{
+    if (game is null) return;
+
+    System.Diagnostics.Debug.WriteLine($"Navigating with ID: {game.Id}");
+
+    await Shell.Current.GoToAsync($"gamedetails?id={Uri.EscapeDataString(game.Id)}");
+}
 
     private async Task LoadGames()
     {
@@ -70,4 +83,6 @@ public class GamesViewModel : BaseViewModel
             foreach (var g in filtered) Games.Add(g);
         });
     }
+
+    
 }

@@ -10,13 +10,23 @@
         <CollectionView ItemsSource="{Binding Games}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <VerticalStackLayout Padding="12">
-                        <Label Text="{Binding Title}" FontSize="18" />
-                        <Label Text="{Binding Platform}" FontSize="12" />
-                    </VerticalStackLayout>
+                    <Frame Padding="10" Margin="6">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenDetailsCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Title}" FontSize="18" />
+                            <Label Text="{Binding Platform}" FontSize="12" />
+                        </VerticalStackLayout>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+
 
 
 </VerticalStackLayout>

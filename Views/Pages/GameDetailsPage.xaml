@@ -2,9 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMauiApp.Views.Pages.GameDetailsPage"
-             Title="Game">
+             Title="Game Details">
+
     <VerticalStackLayout Padding="16" Spacing="12">
         <Label Text="Game Details" FontSize="24" />
-        <Label Text="TODO: show game metadata + rating/log actions" />
+        <Label Text="Selected Game ID:" FontSize="14" />
+        <Label Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=GameId}"
+               FontSize="18"
+               FontAttributes="Bold" />
     </VerticalStackLayout>
+
 </ContentPage>
