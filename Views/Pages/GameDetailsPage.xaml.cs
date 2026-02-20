@@ -1,10 +1,13 @@
+using MyMauiApp.ViewModels;
+
 namespace MyMauiApp.Views.Pages;
 
 [QueryProperty(nameof(GameId), "id")]
 public partial class GameDetailsPage : ContentPage
 {
-    private string _gameId = string.Empty;
+    private readonly GameDetailsViewModel _vm;
 
+    private string _gameId = string.Empty;
     public string GameId
     {
         get => _gameId;
@@ -12,12 +15,14 @@ public partial class GameDetailsPage : ContentPage
         {
             _gameId = value;
             OnPropertyChanged();
+            _ = _vm.LoadByIdAsync(_gameId);
         }
     }
 
-    public GameDetailsPage()
+    public GameDetailsPage(GameDetailsViewModel vm)
     {
         InitializeComponent();
-        BindingContext = this;
+        _vm = vm;
+        BindingContext = _vm;
     }
 }

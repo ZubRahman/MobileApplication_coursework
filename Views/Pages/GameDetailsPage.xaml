@@ -4,12 +4,18 @@
              x:Class="MyMauiApp.Views.Pages.GameDetailsPage"
              Title="Game Details">
 
-    <VerticalStackLayout Padding="16" Spacing="12">
-        <Label Text="Game Details" FontSize="24" />
-        <Label Text="Selected Game ID:" FontSize="14" />
-        <Label Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=GameId}"
-               FontSize="18"
-               FontAttributes="Bold" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+
+            <Label Text="{Binding GameTitle}" FontSize="24" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="12">
+                <Label Text="{Binding GamePlatform}" FontSize="14" />
+                <Label Text="•" FontSize="14" />
+                <Label Text="{Binding GameGenre}" FontSize="14" />
+            </HorizontalStackLayout>
+            <Label Text="{Binding GameSummary}" FontSize="14" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>

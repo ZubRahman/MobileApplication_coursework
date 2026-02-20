@@ -1,6 +1,7 @@
 using System.Text.Json;
 using MyMauiApp.Models;
 using MyMauiApp.Services.Interfaces;
+using System.Linq;
 
 namespace MyMauiApp.Services;
 
@@ -19,5 +20,11 @@ public class GameCatalogService : IGameCatalogService
 
         Console.WriteLine($"Games loaded: {games?.Count ?? 0}");
         return games ?? new List<Game>();
+    }
+    public async Task<Game?> GetByIdAsync(string id)
+    {
+    if (string.IsNullOrWhiteSpace(id)) return null;
+        var games = await GetGamesAsync();
+        return games.FirstOrDefault(g => string.Equals(g.Id, id, StringComparison.OrdinalIgnoreCase));
     }
 }
