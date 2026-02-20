@@ -1,3 +1,4 @@
+using SQLite;
 namespace MyMauiApp.Models;
 
 public class DiaryEntry
