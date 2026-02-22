@@ -1,5 +1,6 @@
 using MyMauiApp.Models;
 using MyMauiApp.Services.Interfaces;
+using System.Windows.Input;
 
 namespace MyMauiApp.ViewModels;
 
@@ -34,6 +35,7 @@ public class GameDetailsViewModel : BaseViewModel
     public GameDetailsViewModel(IGameCatalogService gameService)
     {
         _gameService = gameService;
+        OpenRateCommand = new Command(async () => await OpenRate());
     }
 
     public async Task LoadByIdAsync(string id)
@@ -46,5 +48,20 @@ public class GameDetailsViewModel : BaseViewModel
         {
             System.Diagnostics.Debug.WriteLine(ex.ToString());
         }
+
+        
     }
+
+    public ICommand OpenRateCommand { get; }
+    private async Task OpenRate()
+    {
+        if (Game is null) return;
+
+        await Shell.Current.GoToAsync(
+            $"editrating?gameId={Uri.EscapeDataString(Game.Id)}&title={Uri.EscapeDataString(Game.Title)}"
+        );
+    }
+
 }
+
+
