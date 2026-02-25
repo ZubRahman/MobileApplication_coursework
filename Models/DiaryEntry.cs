@@ -4,6 +4,7 @@ namespace MyMauiApp.Models;
 
 public class DiaryEntry
 {
+    [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
     public string GameId { get; set; } = string.Empty;
