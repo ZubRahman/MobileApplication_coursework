@@ -17,6 +17,11 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Padding="10" Margin="6">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditEntryCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
                         <VerticalStackLayout Spacing="4">
                             <Label Text="{Binding GameTitle}" FontSize="18" FontAttributes="Bold" />
                             <Label Text="{Binding Rating, StringFormat='Rating: {0}/10'}" FontSize="13" />
@@ -24,6 +29,7 @@
                             <Label Text="{Binding Review}" FontSize="12" LineBreakMode="TailTruncation" MaxLines="2"/>
                         </VerticalStackLayout>
                     </Frame>
+                    
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

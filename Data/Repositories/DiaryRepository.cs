@@ -24,4 +24,24 @@ public class DiaryRepository : IDiaryRepository
                          .OrderByDescending(e => e.CreatedAt)
                          .ToListAsync();
     }
+
+    public async Task<DiaryEntry?> GetByIdAsync(int id)
+    {
+        var conn = await _db.ConnectionAsync();
+        return await conn.Table<DiaryEntry>()
+                        .Where(e => e.Id == id)
+                        .FirstOrDefaultAsync();
+    }
+
+    public async Task UpdateEntryAsync(DiaryEntry entry)
+    {
+        var conn = await _db.ConnectionAsync();
+        await conn.UpdateAsync(entry);
+    }
+
+    public async Task DeleteEntryAsync(int id)
+    {
+        var conn = await _db.ConnectionAsync();
+        await conn.DeleteAsync<DiaryEntry>(id);
+    }
 }

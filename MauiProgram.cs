@@ -24,7 +24,7 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-		// ViewModels
+		// viewModels
 		builder.Services.AddTransient<GamesViewModel>();
 		builder.Services.AddTransient<DiaryViewModel>();
 		builder.Services.AddTransient<ProfileViewModel>();
@@ -34,7 +34,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<StatsViewModel>();
 		builder.Services.AddTransient<SyncViewModel>();
 
-		// Pages
+		// pages
 		builder.Services.AddTransient<GamesPage>();
 		builder.Services.AddTransient<DiaryPage>();
 		builder.Services.AddTransient<ProfilePage>();
@@ -45,7 +45,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<AppDb>();
 		builder.Services.AddSingleton<IDiaryRepository, DiaryRepository>();
 
-		// Services
+		// services
 		builder.Services.AddSingleton<IGameCatalogService, GameCatalogService>();
 		return builder.Build();
 	}

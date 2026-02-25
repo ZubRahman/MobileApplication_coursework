@@ -12,7 +12,6 @@ public partial class GamesPage : ContentPage
         BindingContext = services?.GetService(typeof(GamesViewModel)) as GamesViewModel;
     }
 
-    // Keep this too if you want (optional)
     public GamesPage(GamesViewModel vm) : this()
     {
         BindingContext = vm;

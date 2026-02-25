@@ -20,6 +20,8 @@
                     Placeholder="What did you think?" />
 
             <Button Text="Save" Command="{Binding SaveCommand}" />
+            <Button Text="Delete"
+        Command="{Binding DeleteCommand}" />
 
         </VerticalStackLayout>
     </ScrollView>

@@ -8,6 +8,7 @@ public class EditRatingViewModel : BaseViewModel
 {
     private readonly IDiaryRepository _repo;
 
+    public int? EntryId { get; set; }
     public string GameId { get; set; } = string.Empty;
 
     private string _gameTitle = string.Empty;
@@ -32,29 +33,131 @@ public class EditRatingViewModel : BaseViewModel
     }
 
     public ICommand SaveCommand { get; }
+    public ICommand DeleteCommand { get; }
 
     public EditRatingViewModel(IDiaryRepository repo)
     {
         _repo = repo;
-        SaveCommand = new Command(async () => await Save());
+
+        SaveCommand = new Command(async () => await Save(), () => !IsBusy);
+        DeleteCommand = new Command(async () => await Delete(), () => !IsBusy);
+    }
+
+    public async Task LoadExistingAsync()
+    {
+        try
+        {
+            if (EntryId is null) return;
+
+            var existing = await _repo.GetByIdAsync(EntryId.Value);
+            if (existing is null) return;
+
+            GameId = existing.GameId;
+            GameTitle = existing.GameTitle;
+            Rating = existing.Rating;
+            Review = existing.Review;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+            await Shell.Current.DisplayAlert("Load failed", ex.Message, "OK");
+        }
     }
 
     private async Task Save()
     {
-        if (string.IsNullOrWhiteSpace(GameId)) return;
+        if (IsBusy) return;
 
-        var entry = new DiaryEntry
+        try
         {
-            GameId = GameId,
-            GameTitle = GameTitle,
-            Rating = (int)Math.Round(Rating),
-            Review = Review,
-            PlayedOn = DateTime.Now,
-            CreatedAt = DateTime.Now
-        };
+            IsBusy = true;
+            ((Command)SaveCommand).ChangeCanExecute();
+            ((Command)DeleteCommand).ChangeCanExecute();
 
-        await _repo.AddEntryAsync(entry);
+            if (string.IsNullOrWhiteSpace(GameId))
+                throw new InvalidOperationException("GameId is missing (navigation parameters not set).");
 
-        await Shell.Current.GoToAsync(".."); // back
+            if (EntryId is null)
+            {
+                var entry = new DiaryEntry
+                {
+                    GameId = GameId,
+                    GameTitle = GameTitle,
+                    Rating = (int)Math.Round(Rating),
+                    Review = Review,
+                    PlayedOn = DateTime.Now,
+                    CreatedAt = DateTime.Now
+                };
+
+                await _repo.AddEntryAsync(entry);
+            }
+            else
+            {
+                var existing = await _repo.GetByIdAsync(EntryId.Value);
+                if (existing is null)
+                    throw new InvalidOperationException("Could not find the diary entry to update.");
+
+                existing.Rating = (int)Math.Round(Rating);
+                existing.Review = Review;
+                existing.PlayedOn = DateTime.Now;
+
+                await _repo.UpdateEntryAsync(existing);
+            }
+
+            await Shell.Current.GoToAsync("..");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+            await Shell.Current.DisplayAlert("Save failed", ex.Message, "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+            ((Command)SaveCommand).ChangeCanExecute();
+            ((Command)DeleteCommand).ChangeCanExecute();
+        }
+    }
+
+    private async Task Delete()
+    {
+        if (IsBusy) return;
+
+        try
+        {
+            if (EntryId is null)
+            {
+                await Shell.Current.DisplayAlert("Delete", "Nothing to delete yet (this entry hasn’t been saved).", "OK");
+                return;
+            }
+
+            var confirm = await Shell.Current.DisplayAlert(
+                "Delete entry?",
+                "This will permanently delete your review/rating.",
+                "Delete",
+                "Cancel"
+            );
+
+            if (!confirm) return;
+
+            IsBusy = true;
+            ((Command)SaveCommand).ChangeCanExecute();
+            ((Command)DeleteCommand).ChangeCanExecute();
+
+            await _repo.DeleteEntryAsync(EntryId.Value);
+
+            await Shell.Current.GoToAsync("..");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+            await Shell.Current.DisplayAlert("Delete failed", ex.Message, "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+            ((Command)SaveCommand).ChangeCanExecute();
+            ((Command)DeleteCommand).ChangeCanExecute();
+        }
     }
 }
