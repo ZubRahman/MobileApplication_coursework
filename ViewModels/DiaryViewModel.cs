@@ -7,6 +7,27 @@ namespace MyMauiApp.ViewModels;
 
 public class DiaryViewModel : BaseViewModel
 {
+
+    private string _selectedSort = "Newest";
+    public string SelectedSort
+    {
+        get => _selectedSort;
+        set
+        {
+            if (_selectedSort == value) return;
+            _selectedSort = value;
+            _ = LoadEntriesAsync();
+        }
+    }
+
+    public List<string> SortOptions { get; } = new()
+    {
+        "Newest",
+        "Oldest",
+        "Highest Rated",
+        "Lowest Rated"
+    };
+
     private readonly IDiaryRepository _repo;
 
     public ObservableCollection<DiaryEntry> Entries { get; } = new();
@@ -18,20 +39,28 @@ public class DiaryViewModel : BaseViewModel
 
         EditEntryCommand = new Command<DiaryEntry>(async (entry) => await EditEntry(entry));
 
-        _ = LoadEntries();
+        _ = LoadEntriesAsync();
     }
 
-    public async Task LoadEntries()
+    public async Task LoadEntriesAsync()
     {
         try
         {
-            var items = await _repo.GetEntriesAsync();
+            var entries = await _repo.GetEntriesAsync();
+
+            entries = SelectedSort switch
+            {
+                "Oldest" => entries.OrderBy(e => e.PlayedOn).ToList(),
+                "Highest Rated" => entries.OrderByDescending(e => e.Rating).ToList(),
+                "Lowest Rated" => entries.OrderBy(e => e.Rating).ToList(),
+                _ => entries.OrderByDescending(e => e.PlayedOn).ToList()
+            };
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 Entries.Clear();
-                foreach (var e in items)
-                    Entries.Add(e);
+                foreach (var entry in entries)
+                    Entries.Add(entry);
             });
         }
         catch (Exception ex)
@@ -39,7 +68,6 @@ public class DiaryViewModel : BaseViewModel
             System.Diagnostics.Debug.WriteLine(ex.ToString());
         }
     }
-
     private async Task EditEntry(DiaryEntry? entry)
     {
         if (entry is null) return;

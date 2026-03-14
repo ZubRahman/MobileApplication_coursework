@@ -15,6 +15,6 @@ public partial class DiaryPage : ContentPage
         base.OnAppearing();
 
         if (BindingContext is DiaryViewModel vm)
-            await vm.LoadEntries();
+            await vm.LoadEntriesAsync();
     }
 }
