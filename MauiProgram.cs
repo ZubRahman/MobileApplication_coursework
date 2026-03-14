@@ -45,6 +45,8 @@ public static class MauiProgram
 		builder.Services.AddSingleton<AppDb>();
 		builder.Services.AddSingleton<IDiaryRepository, DiaryRepository>();
 
+		builder.Services.AddSingleton<ISupabaseService, SupabaseService>();
+
 		// services
 		builder.Services.AddSingleton<IGameCatalogService, GameCatalogService>();
 		return builder.Build();
