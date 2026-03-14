@@ -1,12 +1,14 @@
 using System.Windows.Input;
 using MyMauiApp.Data.Repositories;
 using MyMauiApp.Models;
+using MyMauiApp.Services.Interfaces;
 
 namespace MyMauiApp.ViewModels;
 
 public class EditRatingViewModel : BaseViewModel
 {
     private readonly IDiaryRepository _repo;
+    private readonly ISupabaseService _supabaseService;
 
     public int? EntryId { get; set; }
     public string GameId { get; set; } = string.Empty;
@@ -35,9 +37,10 @@ public class EditRatingViewModel : BaseViewModel
     public ICommand SaveCommand { get; }
     public ICommand DeleteCommand { get; }
 
-    public EditRatingViewModel(IDiaryRepository repo)
+    public EditRatingViewModel(IDiaryRepository repo, ISupabaseService supabaseService)
     {
         _repo = repo;
+        _supabaseService = supabaseService;
 
         SaveCommand = new Command(async () => await Save(), () => !IsBusy);
         DeleteCommand = new Command(async () => await Delete(), () => !IsBusy);
@@ -90,6 +93,14 @@ public class EditRatingViewModel : BaseViewModel
                 };
 
                 await _repo.AddEntryAsync(entry);
+                try
+                    {
+                        await _supabaseService.AddDiaryEntryAsync(entry);
+                    }
+                catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Supabase insert failed: {ex}");
+                    }
             }
             else
             {

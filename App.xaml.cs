@@ -17,11 +17,11 @@ public partial class App : Application
         try
         {
             await supabaseService.InitializeAsync();
-            System.Diagnostics.Debug.WriteLine("Supabase initialized successfully.");
+            Console.WriteLine("Supabase initialized successfully.");
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Supabase init failed: {ex}");
+            Console.WriteLine($"Supabase init failed: {ex}");
         }
     }
 }
