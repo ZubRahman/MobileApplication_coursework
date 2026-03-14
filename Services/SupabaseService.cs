@@ -36,5 +36,25 @@ public class SupabaseService : ISupabaseService
 
         await Client.From<SupabaseDiaryEntry>().Insert(cloudEntry);
     }
+
+    public async Task SignUpAsync(string email, string password)
+    {
+        await Client.Auth.SignUp(email, password);
+    }
+
+    public async Task SignInAsync(string email, string password)
+    {
+        await Client.Auth.SignIn(email, password);
+    }
+
+    public async Task SignOutAsync()
+    {
+        await Client.Auth.SignOut();
+    }
+
+    public string? GetCurrentUserId()
+    {
+        return Client.Auth.CurrentUser?.Id;
+    }
     
 }

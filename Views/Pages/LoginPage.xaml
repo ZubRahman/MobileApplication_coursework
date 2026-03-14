@@ -3,8 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMauiApp.Views.Pages.LoginPage"
              Title="Login">
-    <VerticalStackLayout Padding="16" Spacing="12">
-        <Label Text="Login" FontSize="24" />
-        <Label Text="TODO: Supabase Auth" />
-    </VerticalStackLayout>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+
+            <Label Text="Supabase Auth" FontSize="24" FontAttributes="Bold" />
+
+            <Entry Placeholder="Email"
+                   Keyboard="Email"
+                   Text="{Binding Email}" />
+
+            <Entry Placeholder="Password"
+                   IsPassword="True"
+                   Text="{Binding Password}" />
+
+            <Button Text="Sign Up"
+                    Command="{Binding SignUpCommand}" />
+
+            <Button Text="Log In"
+                    Command="{Binding SignInCommand}" />
+
+            <Button Text="Log Out"
+                    Command="{Binding SignOutCommand}" />
+
+            <Label Text="{Binding StatusMessage}"
+                   LineBreakMode="WordWrap" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

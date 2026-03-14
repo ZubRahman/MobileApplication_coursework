@@ -13,6 +13,6 @@
                       ContentTemplate="{DataTemplate pages:DiaryPage}" />
         <ShellContent Title="Profile"
                       Route="profile"
-                      ContentTemplate="{DataTemplate pages:ProfilePage}" />
+                      ContentTemplate="{DataTemplate pages:LoginPage}" />
     </TabBar>
 </Shell>

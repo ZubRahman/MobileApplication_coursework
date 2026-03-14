@@ -4,6 +4,7 @@
              x:Class="MyMauiApp.Views.Pages.ProfilePage"
              Title="Profile">
     <VerticalStackLayout Padding="16" Spacing="12">
+        <Button Text="Open Login" Command="{Binding OpenLoginCommand}" />
         <Label Text="Profile" FontSize="24" />
         <Label Text="TODO: stats + sync status" />
     </VerticalStackLayout>
