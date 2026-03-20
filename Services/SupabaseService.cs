@@ -24,8 +24,12 @@ public class SupabaseService : ISupabaseService
     }
     public async Task AddDiaryEntryAsync(DiaryEntry entry)
     {
+        var currentUserId = GetCurrentUserId();
+        System.Diagnostics.Debug.WriteLine($"Current Supabase user id: {currentUserId}");
+        
         var cloudEntry = new SupabaseDiaryEntry
         {
+            UserId = currentUserId,
             GameId = entry.GameId,
             GameTitle = entry.GameTitle,
             Rating = entry.Rating,
