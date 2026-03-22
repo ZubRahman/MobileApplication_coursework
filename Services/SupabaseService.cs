@@ -1,5 +1,6 @@
 using MyMauiApp.Models;
 using MyMauiApp.Services.Interfaces;
+using System.Linq;
 
 namespace MyMauiApp.Services;
 
@@ -41,6 +42,31 @@ public class SupabaseService : ISupabaseService
         await Client.From<SupabaseDiaryEntry>().Insert(cloudEntry);
     }
 
+    public async Task<List<DiaryEntry>> GetCurrentUserDiaryEntriesAsync()
+    {
+        var currentUserId = GetCurrentUserId();
+
+        if (string.IsNullOrWhiteSpace(currentUserId))
+            return new List<DiaryEntry>();
+
+        var response = await Client
+            .From<SupabaseDiaryEntry>()
+            .Filter("user_id", Supabase.Postgrest.Constants.Operator.Equals, currentUserId)
+            .Get();
+
+        var results = response.Models.Select(row => new DiaryEntry
+        {
+            GameId = row.GameId,
+            GameTitle = row.GameTitle,
+            Rating = row.Rating,
+            Review = row.Review,
+            PlayedOn = row.PlayedOn,
+            CreatedAt = row.CreatedAt
+        }).ToList();
+
+        return results;
+    }
+
     public async Task SignUpAsync(string email, string password)
     {
         await Client.Auth.SignUp(email, password);
@@ -60,5 +86,7 @@ public class SupabaseService : ISupabaseService
     {
         return Client.Auth.CurrentUser?.Id;
     }
+
+    
     
 }

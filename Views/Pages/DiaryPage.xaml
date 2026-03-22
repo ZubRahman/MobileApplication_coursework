@@ -10,6 +10,8 @@
         <Picker Title="Sort by"
             ItemsSource="{Binding SortOptions}"
             SelectedItem="{Binding SelectedSort}" />
+        <Button Text="Load My Cloud Entries"
+        Command="{Binding LoadCloudEntriesCommand}" />
         <CollectionView ItemsSource="{Binding Entries}">
             <CollectionView.EmptyView>
                 <Label Text="No diary entries yet. Rate a game to add one."
