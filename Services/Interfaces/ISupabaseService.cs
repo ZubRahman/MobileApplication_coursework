@@ -13,4 +13,5 @@ public interface ISupabaseService
     Task SignInAsync(string email, string password);
     Task SignOutAsync();
     string? GetCurrentUserId();
+    string? GetCurrentUserEmail();
 }

@@ -86,6 +86,10 @@ public class SupabaseService : ISupabaseService
     {
         return Client.Auth.CurrentUser?.Id;
     }
+    public string? GetCurrentUserEmail()
+    {
+        return Client.Auth.CurrentUser?.Email;
+    }
 
     
     
