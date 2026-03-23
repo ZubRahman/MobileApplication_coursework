@@ -11,6 +11,7 @@ public class EditRatingViewModel : BaseViewModel
     private readonly ISupabaseService _supabaseService;
 
     public int? EntryId { get; set; }
+    public long? CloudId { get; set; }
     public string GameId { get; set; } = string.Empty;
 
     private string _gameTitle = string.Empty;
@@ -130,10 +131,11 @@ public class EditRatingViewModel : BaseViewModel
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"Supabase update failed: {ex}");
+                    await Shell.Current.GoToAsync("..");
                 }
             }
 
-            await Shell.Current.GoToAsync("..");
+            
         }
         catch (Exception ex)
         {
@@ -154,12 +156,11 @@ public class EditRatingViewModel : BaseViewModel
 
         try
         {
-            if (EntryId is null)
+            if (EntryId is null && CloudId is null)
             {
                 await Shell.Current.DisplayAlert("Delete", "Nothing to delete yet (this entry hasn’t been saved).", "OK");
                 return;
             }
-
             var confirm = await Shell.Current.DisplayAlert(
                 "Delete entry?",
                 "This will permanently delete your review/rating.",
@@ -169,16 +170,29 @@ public class EditRatingViewModel : BaseViewModel
 
             if (!confirm) return;
 
-            IsBusy = true;
-            ((Command)SaveCommand).ChangeCanExecute();
-            ((Command)DeleteCommand).ChangeCanExecute();
+            DiaryEntry? existing = null;
 
-            var existing = await _repo.GetByIdAsync(EntryId.Value);
+            if (EntryId is not null)
+            {
+                existing = await _repo.GetByIdAsync(EntryId.Value);
+            }
+            await Shell.Current.GoToAsync("..");
+
+            if (existing is null && CloudId is not null)
+            {
+                existing = new DiaryEntry
+                {
+                    Id = EntryId ?? 0,
+                    CloudId = CloudId,
+                    GameId = GameId,
+                    GameTitle = GameTitle,
+                    Rating = (int)Math.Round(Rating),
+                    Review = Review
+                };
+            }
+
             if (existing is null)
                 throw new InvalidOperationException("Could not find the diary entry to delete.");
-
-            await _repo.DeleteEntryAsync(EntryId.Value);
-
             try
             {
                 await _supabaseService.DeleteDiaryEntryAsync(existing);
@@ -188,6 +202,10 @@ public class EditRatingViewModel : BaseViewModel
                 System.Diagnostics.Debug.WriteLine($"Supabase delete failed: {ex}");
             }
 
+            if (EntryId is not null)
+            {
+                await _repo.DeleteEntryAsync(EntryId.Value);
+            }
             await Shell.Current.GoToAsync("..");
         }
         catch (Exception ex)

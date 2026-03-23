@@ -98,9 +98,15 @@ public class DiaryViewModel : BaseViewModel
     {
         if (entry is null) return;
 
-        await Shell.Current.GoToAsync(
-            $"editrating?entryId={entry.Id}&gameId={Uri.EscapeDataString(entry.GameId)}&title={Uri.EscapeDataString(entry.GameTitle)}"
-        );
+        var route =
+            $"editrating?entryId={(entry.Id > 0 ? entry.Id.ToString() : "")}" +
+            $"&cloudId={entry.CloudId}" +
+            $"&gameId={Uri.EscapeDataString(entry.GameId)}" +
+            $"&title={Uri.EscapeDataString(entry.GameTitle)}" +
+            $"&rating={entry.Rating}" +
+            $"&review={Uri.EscapeDataString(entry.Review ?? string.Empty)}";
+
+        await Shell.Current.GoToAsync(route);
     }
     
    
