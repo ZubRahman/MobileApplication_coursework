@@ -4,17 +4,17 @@
              x:Class="MyMauiApp.Views.Pages.DiaryPage"
              Title="Diary">
 
-    <Grid Padding="10" RowDefinitions="Auto,Auto,*">
+    <Grid Padding="10" RowDefinitions="Auto,Auto,Auto,*">
 
         <Label Grid.Row="0"
                Text="My Diary"
                FontSize="22"
                FontAttributes="Bold" />
 
-        <Picker Grid.Row ="1"
-            Title="View mode"
-            ItemsSource="{Binding ViewModes}"
-            SelectedItem="{Binding SelectedViewMode}" />
+        <Picker Grid.Row="1"
+                Title="View mode"
+                ItemsSource="{Binding ViewModes}"
+                SelectedItem="{Binding SelectedViewMode}" />
         
         <Picker Grid.Row="2"
                 Title="Sort by"
