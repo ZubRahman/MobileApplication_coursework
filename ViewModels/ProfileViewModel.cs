@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using MyMauiApp.Data.Repositories;
 using MyMauiApp.Models;
 using MyMauiApp.Services.Interfaces;
+using System.Windows.Input;
 
 namespace MyMauiApp.ViewModels;
 
@@ -43,6 +44,9 @@ public class ProfileViewModel : BaseViewModel
         _repo = repo;
         _supabaseService = supabaseService;
 
+        OpenLoginCommand = new Command(async () => await OpenLogin());
+        LogOutCommand = new Command(async () => await LogOut());
+
         _ = LoadProfileAsync();
     }
 
@@ -55,11 +59,17 @@ public class ProfileViewModel : BaseViewModel
 
             if (!string.IsNullOrWhiteSpace(userId))
             {
+                IsLoggedIn = true;
+                OnPropertyChanged(nameof(IsLoggedOut));
+
                 AuthStatus = "Logged in";
                 UserEmail = email ?? "Unknown email";
             }
             else
             {
+                IsLoggedIn = false;
+                OnPropertyChanged(nameof(IsLoggedOut));
+
                 AuthStatus = "Logged out";
                 UserEmail = "Not logged in";
             }
@@ -83,4 +93,38 @@ public class ProfileViewModel : BaseViewModel
             System.Diagnostics.Debug.WriteLine(ex.ToString());
         }
     }
+
+    private bool _isLoggedIn;
+    public bool IsLoggedIn
+    {
+        get => _isLoggedIn;
+        set => SetProperty(ref _isLoggedIn, value);
+    }
+
+    public bool IsLoggedOut => !IsLoggedIn;
+
+    public ICommand OpenLoginCommand { get; }
+    public ICommand LogOutCommand { get; }
+
+    private async Task OpenLogin()
+    {
+        await Shell.Current.GoToAsync("login");
+    }
+
+    private async Task LogOut()
+    {
+        try
+        {
+            await _supabaseService.SignOutAsync();
+            await LoadProfileAsync();
+            await Shell.Current.DisplayAlert("Logged out", "You have been logged out.", "OK");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+            await Shell.Current.DisplayAlert("Logout failed", ex.Message, "OK");
+        }
+    }
+
+
 }

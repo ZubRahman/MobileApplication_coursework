@@ -14,6 +14,14 @@
             <Label Text="Email" FontAttributes="Bold" />
             <Label Text="{Binding UserEmail}" />
 
+            <Button Text="Open Login"
+            Command="{Binding OpenLoginCommand}"
+            IsVisible="{Binding IsLoggedOut}" />
+
+            <Button Text="Log Out"
+            Command="{Binding LogOutCommand}"
+            IsVisible="{Binding IsLoggedIn}" />
+
             <Label Text="Total Logs" FontAttributes="Bold" />
             <Label Text="{Binding TotalLogs}" />
 
