@@ -51,4 +51,12 @@ public class DiaryRepository : IDiaryRepository
                         .Where(e => e.CloudId == null)
                         .ToListAsync();
     }
+
+    public async Task<DiaryEntry?> GetByCloudIdAsync(long cloudId)
+    {
+        var conn = await _db.ConnectionAsync();
+        return await conn.Table<DiaryEntry>()
+                        .Where(e => e.CloudId == cloudId)
+                        .FirstOrDefaultAsync();
+    }
 }

@@ -71,6 +71,8 @@ public class SupabaseService : ISupabaseService
 
         var results = response.Models.Select(row => new DiaryEntry
         {
+            CloudId = row.Id,
+            UserId = row.UserId ?? string.Empty,
             GameId = row.GameId,
             GameTitle = row.GameTitle,
             Rating = row.Rating,
@@ -161,6 +163,34 @@ public class SupabaseService : ISupabaseService
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Sync failed for local entry {localEntry.Id}: {ex}");
+            }
+        }
+    }
+
+    public async Task PullCloudEntriesToLocalAsync(IDiaryRepository repo)
+    {
+        var cloudEntries = await GetCurrentUserDiaryEntriesAsync();
+
+        foreach (var cloudEntry in cloudEntries)
+        {
+            if (cloudEntry.CloudId is null)
+                continue;
+
+            var existingLocal = await repo.GetByCloudIdAsync(cloudEntry.CloudId.Value);
+
+            if (existingLocal is null)
+            {
+                await repo.AddEntryAsync(new DiaryEntry
+                {
+                    CloudId = cloudEntry.CloudId,
+                    UserId = cloudEntry.UserId,
+                    GameId = cloudEntry.GameId,
+                    GameTitle = cloudEntry.GameTitle,
+                    Rating = cloudEntry.Rating,
+                    Review = cloudEntry.Review,
+                    PlayedOn = cloudEntry.PlayedOn,
+                    CreatedAt = cloudEntry.CreatedAt
+                });
             }
         }
     }
