@@ -37,6 +37,24 @@ public class DiaryViewModel : BaseViewModel
         "Lowest Rated"
     };
 
+    private string _selectedViewMode = "All Logs";
+    public string SelectedViewMode
+    {
+        get => _selectedViewMode;
+        set
+        {
+            if (_selectedViewMode == value) return;
+            _selectedViewMode = value;
+            _ = LoadEntriesAsync();
+        }
+    }
+
+    public List<string> ViewModes { get; } = new()
+    {
+        "All Logs",
+        "Unique Games"
+    };
+
     
 
     public DiaryViewModel(IDiaryRepository repo, ISupabaseService supabaseService)
@@ -49,51 +67,61 @@ public class DiaryViewModel : BaseViewModel
     }
 
     public async Task LoadEntriesAsync()
-{
-    if (IsBusy) return;
-
-    try
     {
-        IsBusy = true;
+        if (IsBusy) return;
 
-        var currentUserId = _supabaseService.GetCurrentUserId();
-
-        List<DiaryEntry> entries;
-
-        if (!string.IsNullOrWhiteSpace(currentUserId))
+        try
         {
-            entries = await _supabaseService.GetCurrentUserDiaryEntriesAsync();
+            IsBusy = true;
+
+            var currentUserId = _supabaseService.GetCurrentUserId();
+
+            List<DiaryEntry> entries;
+
+            
+
+            if (!string.IsNullOrWhiteSpace(currentUserId))
+            {
+                entries = await _supabaseService.GetCurrentUserDiaryEntriesAsync();
+            }
+            else
+            {
+                entries = await _repo.GetEntriesAsync();
+            }
+
+            if (SelectedViewMode == "Unique Games")
+            {
+                entries = entries
+                    .GroupBy(e => e.GameId)
+                    .Select(g => g.OrderByDescending(x => x.PlayedOn).First())
+                    .ToList();
+            }
+
+            entries = SelectedSort switch
+            {
+                "Oldest" => entries.OrderBy(e => e.PlayedOn).ToList(),
+                "Highest Rated" => entries.OrderByDescending(e => e.Rating).ToList(),
+                "Lowest Rated" => entries.OrderBy(e => e.Rating).ToList(),
+                _ => entries.OrderByDescending(e => e.PlayedOn).ToList()
+            };
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Entries.Clear();
+                foreach (var entry in entries)
+                    Entries.Add(entry);
+            });
         }
-        else
+        catch (Exception ex)
         {
-            entries = await _repo.GetEntriesAsync();
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+            await Shell.Current.DisplayAlert("Load failed", ex.Message, "OK");
         }
-
-        entries = SelectedSort switch
+        finally
         {
-            "Oldest" => entries.OrderBy(e => e.PlayedOn).ToList(),
-            "Highest Rated" => entries.OrderByDescending(e => e.Rating).ToList(),
-            "Lowest Rated" => entries.OrderBy(e => e.Rating).ToList(),
-            _ => entries.OrderByDescending(e => e.PlayedOn).ToList()
-        };
-
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            Entries.Clear();
-            foreach (var entry in entries)
-                Entries.Add(entry);
-        });
+            IsBusy = false;
+        }
     }
-    catch (Exception ex)
-    {
-        System.Diagnostics.Debug.WriteLine(ex.ToString());
-        await Shell.Current.DisplayAlert("Load failed", ex.Message, "OK");
-    }
-    finally
-    {
-        IsBusy = false;
-    }
-}
     private async Task EditEntry(DiaryEntry? entry)
     {
         if (entry is null) return;

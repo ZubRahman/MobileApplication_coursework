@@ -11,12 +11,17 @@
                FontSize="22"
                FontAttributes="Bold" />
 
-        <Picker Grid.Row="1"
+        <Picker Grid.Row ="1"
+            Title="View mode"
+            ItemsSource="{Binding ViewModes}"
+            SelectedItem="{Binding SelectedViewMode}" />
+        
+        <Picker Grid.Row="2"
                 Title="Sort by"
                 ItemsSource="{Binding SortOptions}"
                 SelectedItem="{Binding SelectedSort}" />
 
-        <CollectionView Grid.Row="2"
+        <CollectionView Grid.Row="3"
                         ItemsSource="{Binding Entries}">
             <CollectionView.EmptyView>
                 <Label Text="No diary entries yet. Rate a game to add one."
