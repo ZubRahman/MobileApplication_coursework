@@ -4,17 +4,18 @@ namespace MyMauiApp.Views.Pages;
 
 public partial class DiaryPage : ContentPage
 {
+    private readonly DiaryViewModel _vm;
+
     public DiaryPage(DiaryViewModel vm)
     {
         InitializeComponent();
-        BindingContext = vm;
+        _vm = vm;
+        BindingContext = _vm;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-
-        if (BindingContext is DiaryViewModel vm)
-            await vm.LoadEntriesAsync();
+        await _vm.LoadEntriesAsync();
     }
 }
