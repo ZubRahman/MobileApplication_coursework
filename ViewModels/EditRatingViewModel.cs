@@ -84,6 +84,7 @@ public class EditRatingViewModel : BaseViewModel
             {
                 var entry = new DiaryEntry
                 {
+                    UserId = _supabaseService.GetCurrentUserId() ?? string.Empty,
                     GameId = GameId,
                     GameTitle = GameTitle,
                     Rating = (int)Math.Round(Rating),
@@ -94,13 +95,21 @@ public class EditRatingViewModel : BaseViewModel
 
                 await _repo.AddEntryAsync(entry);
                 try
+                {
+                    var cloudSaved = await _supabaseService.AddDiaryEntryAsync(entry);
+                    System.Diagnostics.Debug.WriteLine($"Cloud saved id: {cloudSaved?.CloudId}, user: {cloudSaved?.UserId}");
+
+                    if (cloudSaved is not null)
                     {
-                        await _supabaseService.AddDiaryEntryAsync(entry);
+                        entry.CloudId = cloudSaved.CloudId;
+                        entry.UserId = cloudSaved.UserId;
+                        await _repo.UpdateEntryAsync(entry);
                     }
+                }
                 catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Supabase insert failed: {ex}");
-                    }
+                {
+                    System.Diagnostics.Debug.WriteLine($"Supabase insert failed: {ex}");
+                }
             }
             else
             {

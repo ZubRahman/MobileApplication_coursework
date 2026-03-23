@@ -23,11 +23,10 @@ public class SupabaseService : ISupabaseService
 
         await Client.InitializeAsync();
     }
-    public async Task AddDiaryEntryAsync(DiaryEntry entry)
+    public async Task<DiaryEntry?> AddDiaryEntryAsync(DiaryEntry entry)
     {
         var currentUserId = GetCurrentUserId();
-        System.Diagnostics.Debug.WriteLine($"Current Supabase user id: {currentUserId}");
-        
+
         var cloudEntry = new SupabaseDiaryEntry
         {
             UserId = currentUserId,
@@ -39,7 +38,22 @@ public class SupabaseService : ISupabaseService
             CreatedAt = entry.CreatedAt
         };
 
-        await Client.From<SupabaseDiaryEntry>().Insert(cloudEntry);
+        var response = await Client.From<SupabaseDiaryEntry>().Insert(cloudEntry);
+
+        var inserted = response.Models.FirstOrDefault();
+        if (inserted is null) return null;
+
+        return new DiaryEntry
+        {
+            CloudId = inserted.Id,
+            UserId = inserted.UserId ?? string.Empty,
+            GameId = inserted.GameId,
+            GameTitle = inserted.GameTitle,
+            Rating = inserted.Rating,
+            Review = inserted.Review,
+            PlayedOn = inserted.PlayedOn,
+            CreatedAt = inserted.CreatedAt
+        };
     }
 
     public async Task<List<DiaryEntry>> GetCurrentUserDiaryEntriesAsync()
