@@ -4,13 +4,20 @@
              x:Class="MyMauiApp.Views.Pages.DiaryPage"
              Title="Diary">
 
-    <VerticalStackLayout Padding="10">
+    <Grid Padding="10" RowDefinitions="Auto,Auto,*">
 
-        <Label Text="My Diary" FontSize="22" FontAttributes="Bold" />
-        <Picker Title="Sort by"
-            ItemsSource="{Binding SortOptions}"
-            SelectedItem="{Binding SelectedSort}" />
-        <CollectionView ItemsSource="{Binding Entries}">
+        <Label Grid.Row="0"
+               Text="My Diary"
+               FontSize="22"
+               FontAttributes="Bold" />
+
+        <Picker Grid.Row="1"
+                Title="Sort by"
+                ItemsSource="{Binding SortOptions}"
+                SelectedItem="{Binding SelectedSort}" />
+
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Entries}">
             <CollectionView.EmptyView>
                 <Label Text="No diary entries yet. Rate a game to add one."
                        Padding="10" />
@@ -24,17 +31,24 @@
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditEntryCommand}"
                                 CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
+
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="{Binding GameTitle}" FontSize="18" FontAttributes="Bold" />
-                            <Label Text="{Binding Rating, StringFormat='Rating: {0}/10'}" FontSize="13" />
-                            <Label Text="{Binding CreatedAt, StringFormat='Saved: {0:dd MMM yyyy HH:mm}'}" FontSize="12" />
-                            <Label Text="{Binding Review}" FontSize="12" LineBreakMode="TailTruncation" MaxLines="2"/>
+                            <Label Text="{Binding GameTitle}"
+                                   FontSize="18"
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding Rating, StringFormat='Rating: {0}/10'}"
+                                   FontSize="13" />
+                            <Label Text="{Binding CreatedAt, StringFormat='Saved: {0:dd MMM yyyy HH:mm}'}"
+                                   FontSize="12" />
+                            <Label Text="{Binding Review}"
+                                   FontSize="12"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="2" />
                         </VerticalStackLayout>
                     </Frame>
-                    
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

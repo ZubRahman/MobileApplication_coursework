@@ -12,6 +12,10 @@ public interface ISupabaseService
     Task SignUpAsync(string email, string password);
     Task SignInAsync(string email, string password);
     Task SignOutAsync();
+
+    Task UpdateDiaryEntryAsync(DiaryEntry entry);
+    Task DeleteDiaryEntryAsync(DiaryEntry entry);
+
     string? GetCurrentUserId();
     string? GetCurrentUserEmail();
 }

@@ -43,6 +43,7 @@ public class DiaryViewModel : BaseViewModel
     {
         _repo = repo;
         _supabaseService = supabaseService;
+        EditEntryCommand = new Command<DiaryEntry>(async (entry) => await EditEntry(entry));
 
         _ = LoadEntriesAsync();
     }

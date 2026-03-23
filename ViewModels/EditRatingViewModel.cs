@@ -122,6 +122,15 @@ public class EditRatingViewModel : BaseViewModel
                 existing.PlayedOn = DateTime.Now;
 
                 await _repo.UpdateEntryAsync(existing);
+
+                try
+                {
+                    await _supabaseService.UpdateDiaryEntryAsync(existing);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Supabase update failed: {ex}");
+                }
             }
 
             await Shell.Current.GoToAsync("..");
@@ -164,7 +173,20 @@ public class EditRatingViewModel : BaseViewModel
             ((Command)SaveCommand).ChangeCanExecute();
             ((Command)DeleteCommand).ChangeCanExecute();
 
+            var existing = await _repo.GetByIdAsync(EntryId.Value);
+            if (existing is null)
+                throw new InvalidOperationException("Could not find the diary entry to delete.");
+
             await _repo.DeleteEntryAsync(EntryId.Value);
+
+            try
+            {
+                await _supabaseService.DeleteDiaryEntryAsync(existing);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Supabase delete failed: {ex}");
+            }
 
             await Shell.Current.GoToAsync("..");
         }

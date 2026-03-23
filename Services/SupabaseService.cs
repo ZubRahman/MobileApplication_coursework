@@ -81,6 +81,42 @@ public class SupabaseService : ISupabaseService
         return results;
     }
 
+    public async Task UpdateDiaryEntryAsync(DiaryEntry entry)
+    {
+        if (entry.CloudId is null)
+            return;
+
+        var currentUserId = GetCurrentUserId();
+
+        var cloudEntry = new SupabaseDiaryEntry
+        {
+            Id = entry.CloudId.Value,
+            UserId = string.IsNullOrWhiteSpace(entry.UserId) ? currentUserId : entry.UserId,
+            GameId = entry.GameId,
+            GameTitle = entry.GameTitle,
+            Rating = entry.Rating,
+            Review = entry.Review,
+            PlayedOn = entry.PlayedOn,
+            CreatedAt = entry.CreatedAt
+        };
+
+        await Client
+            .From<SupabaseDiaryEntry>()
+            .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, entry.CloudId.Value.ToString())
+            .Update(cloudEntry);
+    }
+
+    public async Task DeleteDiaryEntryAsync(DiaryEntry entry)
+    {
+        if (entry.CloudId is null)
+            return;
+
+        await Client
+            .From<SupabaseDiaryEntry>()
+            .Filter("id", Supabase.Postgrest.Constants.Operator.Equals, entry.CloudId.Value.ToString())
+            .Delete();
+    }
+
     public async Task SignUpAsync(string email, string password)
     {
         await Client.Auth.SignUp(email, password);
