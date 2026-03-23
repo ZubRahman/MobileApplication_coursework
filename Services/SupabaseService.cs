@@ -192,6 +192,18 @@ public class SupabaseService : ISupabaseService
                     CreatedAt = cloudEntry.CreatedAt
                 });
             }
+            else
+            {
+                existingLocal.UserId = cloudEntry.UserId;
+                existingLocal.GameId = cloudEntry.GameId;
+                existingLocal.GameTitle = cloudEntry.GameTitle;
+                existingLocal.Rating = cloudEntry.Rating;
+                existingLocal.Review = cloudEntry.Review;
+                existingLocal.PlayedOn = cloudEntry.PlayedOn;
+                existingLocal.CreatedAt = cloudEntry.CreatedAt;
+
+                await repo.UpdateEntryAsync(existingLocal);
+            }
         }
     }
     
