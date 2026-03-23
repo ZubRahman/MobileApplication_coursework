@@ -44,4 +44,11 @@ public class DiaryRepository : IDiaryRepository
         var conn = await _db.ConnectionAsync();
         await conn.DeleteAsync<DiaryEntry>(id);
     }
+   public async Task<List<DiaryEntry>> GetUnsyncedEntriesAsync()
+    {
+        var conn = await _db.ConnectionAsync();
+        return await conn.Table<DiaryEntry>()
+                        .Where(e => e.CloudId == null)
+                        .ToListAsync();
+    }
 }

@@ -1,10 +1,13 @@
 using System.Windows.Input;
 using MyMauiApp.Services.Interfaces;
+using MyMauiApp.Data.Repositories;
+
 
 namespace MyMauiApp.ViewModels;
 
 public class AuthViewModel : BaseViewModel
 {
+    private readonly IDiaryRepository _repo;
     private readonly ISupabaseService _supabaseService;
 
     private string _email = string.Empty;
@@ -32,9 +35,10 @@ public class AuthViewModel : BaseViewModel
     public ICommand SignInCommand { get; }
     public ICommand SignOutCommand { get; }
 
-    public AuthViewModel(ISupabaseService supabaseService)
+    public AuthViewModel(ISupabaseService supabaseService, IDiaryRepository repo)
     {
         _supabaseService = supabaseService;
+        _repo = repo;
 
         SignUpCommand = new Command(async () => await SignUp(), () => !IsBusy);
         SignInCommand = new Command(async () => await SignIn(), () => !IsBusy);
@@ -75,7 +79,11 @@ public class AuthViewModel : BaseViewModel
             RefreshCommandStates();
 
             await _supabaseService.SignInAsync(Email, Password);
-            StatusMessage = "Logged in successfully.";
+
+            var unsynced = await _repo.GetUnsyncedEntriesAsync();
+            await _supabaseService.SyncUnsyncedLocalEntriesAsync(unsynced, _repo);
+
+            StatusMessage = "Logged in successfully. Local entries synced to cloud.";
         }
         catch (Exception ex)
         {

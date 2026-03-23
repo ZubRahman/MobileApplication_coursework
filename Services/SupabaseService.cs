@@ -1,5 +1,6 @@
 using MyMauiApp.Models;
 using MyMauiApp.Services.Interfaces;
+using MyMauiApp.Data.Repositories;
 using System.Linq;
 
 namespace MyMauiApp.Services;
@@ -141,6 +142,28 @@ public class SupabaseService : ISupabaseService
         return Client.Auth.CurrentUser?.Email;
     }
 
+    public async Task SyncUnsyncedLocalEntriesAsync(List<DiaryEntry> localEntries, IDiaryRepository repo)
+    {
+        foreach (var localEntry in localEntries)
+        {
+            try
+            {
+                var cloudSaved = await AddDiaryEntryAsync(localEntry);
+
+                if (cloudSaved is not null)
+                {
+                    localEntry.CloudId = cloudSaved.CloudId;
+                    localEntry.UserId = cloudSaved.UserId;
+
+                    await repo.UpdateEntryAsync(localEntry);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Sync failed for local entry {localEntry.Id}: {ex}");
+            }
+        }
+    }
     
     
 }

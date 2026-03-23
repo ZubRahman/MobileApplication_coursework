@@ -1,6 +1,8 @@
 using MyMauiApp.Models;
-
 namespace MyMauiApp.Services.Interfaces;
+using MyMauiApp.Data.Repositories;
+
+
 
 public interface ISupabaseService
 {
@@ -15,6 +17,7 @@ public interface ISupabaseService
 
     Task UpdateDiaryEntryAsync(DiaryEntry entry);
     Task DeleteDiaryEntryAsync(DiaryEntry entry);
+    Task SyncUnsyncedLocalEntriesAsync(List<DiaryEntry> localEntries, IDiaryRepository repo);
 
     string? GetCurrentUserId();
     string? GetCurrentUserEmail();

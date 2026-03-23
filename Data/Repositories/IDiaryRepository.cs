@@ -10,4 +10,5 @@ public interface IDiaryRepository
     Task<DiaryEntry?> GetByIdAsync(int id);
     Task UpdateEntryAsync(DiaryEntry entry);
     Task DeleteEntryAsync(int id);
+    Task<List<DiaryEntry>> GetUnsyncedEntriesAsync();
 }
