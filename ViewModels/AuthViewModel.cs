@@ -68,7 +68,6 @@ public class AuthViewModel : BaseViewModel
             RefreshCommandStates();
         }
     }
-
     private async Task SignIn()
     {
         if (IsBusy) return;
@@ -79,8 +78,7 @@ public class AuthViewModel : BaseViewModel
             RefreshCommandStates();
 
             await _supabaseService.SignInAsync(Email, Password);
-            await _supabaseService.SyncAllAsync(_repo);
-            StatusMessage = "Logged in successfully. Local and cloud entries synced.";
+            StatusMessage = "Logged in successfully. Press Sync now to sync your diary.";
         }
         catch (Exception ex)
         {

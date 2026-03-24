@@ -61,11 +61,13 @@ public class ProfileViewModel : BaseViewModel
 
             IsBusy = true;
             ((Command)SyncNowCommand).ChangeCanExecute();
+            var pending = await _repo.GetEntriesNeedingSyncAsync();
+            SyncStatusMessage = $"Pending local updates: {pending.Count}";
 
-            await _supabaseService.SyncAllAsync(_repo);
+            var result = await _supabaseService.SyncAllAsync(_repo);
             await LoadProfileAsync();
 
-            SyncStatusMessage = "Sync complete.";
+            SyncStatusMessage = result;
         }
         catch (Exception ex)
         {

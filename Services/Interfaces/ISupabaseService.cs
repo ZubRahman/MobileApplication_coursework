@@ -20,7 +20,7 @@ public interface ISupabaseService
     Task SyncUnsyncedLocalEntriesAsync(List<DiaryEntry> localEntries, IDiaryRepository repo);
     Task SyncPendingUpdatesAsync(List<DiaryEntry> localEntries, IDiaryRepository repo);
     Task PullCloudEntriesToLocalAsync(IDiaryRepository repo);
-    Task SyncAllAsync(IDiaryRepository repo);
+    Task<string> SyncAllAsync(IDiaryRepository repo);
     
     string? GetCurrentUserId();
     string? GetCurrentUserEmail();

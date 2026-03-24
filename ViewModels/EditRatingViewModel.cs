@@ -83,6 +83,7 @@ public class EditRatingViewModel : BaseViewModel
 
             if (EntryId is null)
             {
+                var now = DateTime.UtcNow;
                 var entry = new DiaryEntry
                 {
                     UserId = _supabaseService.GetCurrentUserId() ?? string.Empty,
@@ -91,8 +92,9 @@ public class EditRatingViewModel : BaseViewModel
                     GameTitle = GameTitle,
                     Rating = (int)Math.Round(Rating),
                     Review = Review,
-                    PlayedOn = DateTime.Now,
-                    CreatedAt = DateTime.Now
+                    PlayedOn = now,
+                    CreatedAt = now,
+                    UpdatedAt = now
                 };
 
                 await _repo.AddEntryAsync(entry);
@@ -119,9 +121,11 @@ public class EditRatingViewModel : BaseViewModel
                 if (existing is null)
                     throw new InvalidOperationException("Could not find the diary entry to update.");
 
+                var now = DateTime.UtcNow;
                 existing.Rating = (int)Math.Round(Rating);
                 existing.Review = Review;
-                existing.PlayedOn = DateTime.Now;
+                existing.PlayedOn = now;
+                existing.UpdatedAt = now;
                 existing.NeedsSync = true;
 
                 await _repo.UpdateEntryAsync(existing);

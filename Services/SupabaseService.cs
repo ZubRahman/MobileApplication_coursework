@@ -36,7 +36,8 @@ public class SupabaseService : ISupabaseService
             Rating = entry.Rating,
             Review = entry.Review,
             PlayedOn = entry.PlayedOn,
-            CreatedAt = entry.CreatedAt
+            CreatedAt = entry.CreatedAt,
+            UpdatedAt = entry.UpdatedAt
         };
 
         var response = await Client.From<SupabaseDiaryEntry>().Insert(cloudEntry);
@@ -53,7 +54,8 @@ public class SupabaseService : ISupabaseService
             Rating = inserted.Rating,
             Review = inserted.Review,
             PlayedOn = inserted.PlayedOn,
-            CreatedAt = inserted.CreatedAt
+            CreatedAt = inserted.CreatedAt,
+            UpdatedAt = inserted.UpdatedAt
         };
     }
 
@@ -78,7 +80,8 @@ public class SupabaseService : ISupabaseService
             Rating = row.Rating,
             Review = row.Review,
             PlayedOn = row.PlayedOn,
-            CreatedAt = row.CreatedAt
+            CreatedAt = row.CreatedAt,
+            UpdatedAt = row.UpdatedAt
         }).ToList();
 
         return results;
@@ -100,7 +103,8 @@ public class SupabaseService : ISupabaseService
             Rating = entry.Rating,
             Review = entry.Review,
             PlayedOn = entry.PlayedOn,
-            CreatedAt = entry.CreatedAt
+            CreatedAt = entry.CreatedAt,
+            UpdatedAt = entry.UpdatedAt
         };
 
         await Client
@@ -169,6 +173,8 @@ public class SupabaseService : ISupabaseService
     }
     public async Task SyncPendingUpdatesAsync(List<DiaryEntry> localEntries, IDiaryRepository repo)
     {
+        var cloudEntries = await GetCurrentUserDiaryEntriesAsync();
+
         foreach (var localEntry in localEntries)
         {
             try
@@ -176,10 +182,36 @@ public class SupabaseService : ISupabaseService
                 if (localEntry.CloudId is null)
                     continue;
 
-                await UpdateDiaryEntryAsync(localEntry);
+                var matchingCloud = cloudEntries.FirstOrDefault(c => c.CloudId == localEntry.CloudId);
 
-                localEntry.NeedsSync = false;
-                await repo.UpdateEntryAsync(localEntry);
+                if (matchingCloud is null)
+                {
+                    await UpdateDiaryEntryAsync(localEntry);
+                    localEntry.NeedsSync = false;
+                    await repo.UpdateEntryAsync(localEntry);
+                    continue;
+                }
+
+                if (localEntry.UpdatedAt >= matchingCloud.UpdatedAt)
+                {
+                    await UpdateDiaryEntryAsync(localEntry);
+                    localEntry.NeedsSync = false;
+                    await repo.UpdateEntryAsync(localEntry);
+                }
+                else
+                {
+                    localEntry.UserId = matchingCloud.UserId;
+                    localEntry.GameId = matchingCloud.GameId;
+                    localEntry.GameTitle = matchingCloud.GameTitle;
+                    localEntry.Rating = matchingCloud.Rating;
+                    localEntry.Review = matchingCloud.Review;
+                    localEntry.PlayedOn = matchingCloud.PlayedOn;
+                    localEntry.CreatedAt = matchingCloud.CreatedAt;
+                    localEntry.UpdatedAt = matchingCloud.UpdatedAt;
+                    localEntry.NeedsSync = false;
+
+                    await repo.UpdateEntryAsync(localEntry);
+                }
             }
             catch (Exception ex)
             {
@@ -211,7 +243,9 @@ public class SupabaseService : ISupabaseService
                     Rating = cloudEntry.Rating,
                     Review = cloudEntry.Review,
                     PlayedOn = cloudEntry.PlayedOn,
-                    CreatedAt = cloudEntry.CreatedAt
+                    CreatedAt = cloudEntry.CreatedAt,
+                    UpdatedAt = cloudEntry.UpdatedAt
+                    
                 });
             }
             else
@@ -230,21 +264,43 @@ public class SupabaseService : ISupabaseService
                 existingLocal.Review = cloudEntry.Review;
                 existingLocal.PlayedOn = cloudEntry.PlayedOn;
                 existingLocal.CreatedAt = cloudEntry.CreatedAt;
+                existingLocal.UpdatedAt = cloudEntry.UpdatedAt;
 
                 await repo.UpdateEntryAsync(existingLocal);
             }
         }
     }
 
-    public async Task SyncAllAsync(IDiaryRepository repo)
+    public async Task<string> SyncAllAsync(IDiaryRepository repo)
     {
+        int uploadedCount = 0;
+        int updatedCount = 0;
+        int pulledCount = 0;
+
         var unsynced = await repo.GetUnsyncedEntriesAsync();
+        uploadedCount = unsynced.Count;
         await SyncUnsyncedLocalEntriesAsync(unsynced, repo);
 
         var pendingUpdates = await repo.GetEntriesNeedingSyncAsync();
+        updatedCount = pendingUpdates.Count;
         await SyncPendingUpdatesAsync(pendingUpdates, repo);
 
+        var beforePull = await repo.GetEntriesAsync();
+        int beforeCount = beforePull.Count;
+
         await PullCloudEntriesToLocalAsync(repo);
+
+        var afterPull = await repo.GetEntriesAsync();
+        int afterCount = afterPull.Count;
+
+        pulledCount = Math.Max(0, afterCount - beforeCount);
+
+        if (uploadedCount == 0 && updatedCount == 0 && pulledCount == 0)
+        {
+            return "Sync complete. No changes needed.";
+        }
+
+        return $"Sync complete. Uploaded {uploadedCount} new, updated {updatedCount}, pulled {pulledCount} from cloud.";
     }
     
     

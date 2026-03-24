@@ -9,7 +9,7 @@ public class DiaryEntry
 
     public long? CloudId { get; set; }
     public string UserId { get; set; } = string.Empty;
-    public bool NeedsSync {get; set;}
+    public bool NeedsSync { get; set; }
 
     [Indexed]
     public string GameId { get; set; } = string.Empty;
@@ -20,4 +20,5 @@ public class DiaryEntry
 
     public DateTime PlayedOn { get; set; }
     public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 }
