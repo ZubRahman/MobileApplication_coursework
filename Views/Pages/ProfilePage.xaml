@@ -57,38 +57,6 @@
                            LineBreakMode="WordWrap" />
                 </VerticalStackLayout>
             </Frame>
-
-            <Frame Padding="14">
-              <VerticalStackLayout Spacing="10">
-                     <Label Text="Stats"
-                            FontSize="18"
-                            FontAttributes="Bold" />
-
-                     <Label Text="Diary Logs"
-                            FontAttributes="Bold"
-                            FontSize="13" />
-                     <Label Text="{Binding TotalLogs}"
-                            FontSize="14" />
-
-                     <Label Text="Average Rating"
-                            FontAttributes="Bold"
-                            FontSize="13" />
-                     <Label Text="{Binding AverageRating, StringFormat='{}{0:F1}/10'}"
-                            FontSize="14" />
-
-                     <Label Text="Highest Rated Game"
-                            FontAttributes="Bold"
-                            FontSize="13" />
-                     <Label Text="{Binding HighestRatedGame}"
-                            FontSize="14" />
-
-                     <Label Text="Most Logged Game"
-                            FontAttributes="Bold"
-                            FontSize="13" />
-                     <Label Text="{Binding MostLoggedGame}"
-                            FontSize="14" />
-              </VerticalStackLayout>
-             </Frame>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

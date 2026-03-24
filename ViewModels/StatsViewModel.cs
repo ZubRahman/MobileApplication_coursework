@@ -108,14 +108,19 @@ public class StatsViewModel : BaseViewModel
 
             if (entries.Count > 0)
             {
-                var highestRated = entries
+                var uniqueLatestEntries = entries
+                    .GroupBy(e => e.GameId)
+                    .Select(g => g.OrderByDescending(x => x.PlayedOn).First())
+                    .ToList();
+
+                var highestRated = uniqueLatestEntries
                     .OrderByDescending(e => e.Rating)
                     .ThenByDescending(e => e.PlayedOn)
                     .First();
 
                 HighestRatedGame = $"{highestRated.GameTitle} ({highestRated.Rating}/10)";
 
-                var lowestRated = entries
+                var lowestRated = uniqueLatestEntries
                     .OrderBy(e => e.Rating)
                     .ThenByDescending(e => e.PlayedOn)
                     .First();
@@ -141,11 +146,6 @@ public class StatsViewModel : BaseViewModel
                     .First();
 
                 OldestGameLog = $"{oldest.GameTitle} ({oldest.PlayedOn:dd MMM yyyy})";
-
-                var uniqueLatestEntries = entries
-                    .GroupBy(e => e.GameId)
-                    .Select(g => g.OrderByDescending(x => x.PlayedOn).First())
-                    .ToList();
 
                 var curveLines = uniqueLatestEntries
                     .GroupBy(e => e.Rating)
