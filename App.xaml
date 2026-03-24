@@ -3,5 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMauiApp.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <Style x:Key="PageTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="26" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Margin" Value="0,0,0,4" />
+            </Style>
+
+            <Style x:Key="SectionTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
+            <Style x:Key="CardFrameStyle" TargetType="Frame">
+                <Setter Property="Padding" Value="14" />
+                <Setter Property="Margin" Value="0,4,0,8" />
+            </Style>
+
+            <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HeightRequest" Value="44" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

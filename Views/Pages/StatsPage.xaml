@@ -8,10 +8,9 @@
         <VerticalStackLayout Padding="16" Spacing="16">
 
             <Label Text="Stats"
-                   FontSize="26"
-                   FontAttributes="Bold" />
+             Style="{StaticResource PageTitleStyle}" />
 
-            <Frame Padding="14">
+            <Frame Style="{StaticResource CardFrameStyle}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Overview"
                            FontSize="18"
@@ -31,7 +30,7 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame Padding="14">
+            <Frame Style="{StaticResource CardFrameStyle}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Highlights"
                            FontSize="18"
@@ -48,7 +47,7 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame Padding="14">
+            <Frame Style="{StaticResource CardFrameStyle}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Timeline"
                            FontSize="18"
@@ -62,7 +61,7 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame Padding="14">
+            <Frame Style="{StaticResource CardFrameStyle}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Rating Curve (Unique Games)"
                         FontSize="18"

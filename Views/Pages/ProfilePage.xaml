@@ -8,14 +8,12 @@
         <VerticalStackLayout Padding="16" Spacing="16">
 
             <Label Text="Profile"
-                   FontSize="26"
-                   FontAttributes="Bold" />
+              Style="{StaticResource PageTitleStyle}" />
 
-            <Frame Padding="14">
+           <Frame Style="{StaticResource CardFrameStyle}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Account"
-                           FontSize="18"
-                           FontAttributes="Bold" />
+                            Style="{StaticResource SectionTitleStyle}" />
 
                     <Label Text="Status"
                            FontAttributes="Bold"
@@ -30,6 +28,7 @@
                            FontSize="14" />
 
                     <Button Text="Log In"
+                     Style="{StaticResource PrimaryButtonStyle}"
                     Command="{Binding OpenLoginCommand}"
                     IsVisible="{Binding IsLoggedOut}" />
 
