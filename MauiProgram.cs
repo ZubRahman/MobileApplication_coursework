@@ -41,11 +41,15 @@ public static class MauiProgram
 		builder.Services.AddTransient<LoginPage>();
 		builder.Services.AddTransient<GameDetailsPage>();
 		builder.Services.AddTransient<EditRatingPage>();
+		builder.Services.AddTransient<DiaryEntryDetailsViewModel>();
+		builder.Services.AddTransient<DiaryEntryDetailsPage>();
 
 		builder.Services.AddSingleton<AppDb>();
 		builder.Services.AddSingleton<IDiaryRepository, DiaryRepository>();
+		
 
 		builder.Services.AddSingleton<ISupabaseService, SupabaseService>();
+		
 
 		// services
 		builder.Services.AddSingleton<IGameCatalogService, GameCatalogService>();

@@ -127,12 +127,13 @@ public class DiaryViewModel : BaseViewModel
         if (entry is null) return;
 
         var route =
-            $"editrating?entryId={(entry.Id > 0 ? entry.Id.ToString() : "")}" +
+            $"diaryentrydetails?entryId={(entry.Id > 0 ? entry.Id.ToString() : "")}" +
             $"&cloudId={entry.CloudId}" +
             $"&gameId={Uri.EscapeDataString(entry.GameId)}" +
             $"&title={Uri.EscapeDataString(entry.GameTitle)}" +
             $"&rating={entry.Rating}" +
-            $"&review={Uri.EscapeDataString(entry.Review ?? string.Empty)}";
+            $"&review={Uri.EscapeDataString(entry.Review ?? string.Empty)}" +
+            $"&playedOn={Uri.EscapeDataString(entry.PlayedOn.ToString("O"))}";
 
         await Shell.Current.GoToAsync(route);
     }

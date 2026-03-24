@@ -2,26 +2,38 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMauiApp.Views.Pages.EditRatingPage"
-             Title="Rate Game">
+             Title="Diary Entry">
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="14">
 
-            <Label Text="{Binding GameTitle}" FontSize="22" FontAttributes="Bold"/>
+            <Label Text="{Binding GameTitle}"
+                   FontSize="24"
+                   FontAttributes="Bold" />
 
-            <Label Text="Rating (1–10)" />
-            <Slider Minimum="1" Maximum="10" Value="{Binding Rating}" />
-            <Label Text="{Binding Rating, StringFormat='Rating: {0:F0}/10'}" />
+            <Label Text="Your Rating"
+                   FontAttributes="Bold" />
 
-            <Label Text="Review" />
-            <Editor AutoSize="TextChanges"
-                    HeightRequest="140"
-                    Text="{Binding Review}"
-                    Placeholder="What did you think?" />
+            <Slider Minimum="1"
+                    Maximum="10"
+                    Value="{Binding Rating}" />
 
-            <Button Text="Save" Command="{Binding SaveCommand}" />
+            <Label Text="{Binding Rating, StringFormat='{}{0:F0}/10'}"
+                   FontSize="16" />
+
+            <Label Text="Full Review"
+                   FontAttributes="Bold" />
+
+            <Editor Text="{Binding Review}"
+                    AutoSize="TextChanges"
+                    HeightRequest="180"
+                    Placeholder="Write your thoughts here..." />
+
+            <Button Text="Save"
+                    Command="{Binding SaveCommand}" />
+
             <Button Text="Delete"
-        Command="{Binding DeleteCommand}" />
+                    Command="{Binding DeleteCommand}" />
 
         </VerticalStackLayout>
     </ScrollView>

@@ -37,18 +37,22 @@
                                 CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
 
-                        <VerticalStackLayout Spacing="4">
+                        <VerticalStackLayout Spacing="6">
                             <Label Text="{Binding GameTitle}"
-                                   FontSize="18"
-                                   FontAttributes="Bold" />
-                            <Label Text="{Binding Rating, StringFormat='Rating: {0}/10'}"
-                                   FontSize="13" />
-                            <Label Text="{Binding CreatedAt, StringFormat='Saved: {0:dd MMM yyyy HH:mm}'}"
-                                   FontSize="12" />
+                                FontSize="18"
+                                FontAttributes="Bold" />
+
+                            <HorizontalStackLayout Spacing="12">
+                                <Label Text="{Binding Rating, StringFormat='Rating: {0}/10'}"
+                                    FontSize="13" />
+                                <Label Text="{Binding PlayedOn, StringFormat='Date: {0:dd MMM yyyy}'}"
+                                    FontSize="13" />
+                            </HorizontalStackLayout>
+
                             <Label Text="{Binding Review}"
-                                   FontSize="12"
-                                   LineBreakMode="TailTruncation"
-                                   MaxLines="2" />
+                                FontSize="12"
+                                LineBreakMode="TailTruncation"
+                                MaxLines="1" />
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
