@@ -26,8 +26,16 @@
                         ItemsSource="{Binding Entries}"
                         Margin="0,4,0,0">
             <CollectionView.EmptyView>
-                <Label Text="No diary entries yet. Rate a game to add one."
-                       Padding="10" />
+                <Frame Padding="16" Margin="0,12,0,0">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="No diary entries yet"
+                            FontSize="18"
+                            FontAttributes="Bold" />
+                        <Label Text="Browse a game and add your first rating or review."
+                            FontSize="13"
+                            Opacity="0.8" />
+                    </VerticalStackLayout>
+                </Frame>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>

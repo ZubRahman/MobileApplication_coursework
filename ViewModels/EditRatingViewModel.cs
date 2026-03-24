@@ -220,7 +220,7 @@ public class EditRatingViewModel : BaseViewModel
                 await _repo.DeleteEntryAsync(EntryId.Value);
             }
 
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("../..");
         }
         catch (Exception ex)
         {

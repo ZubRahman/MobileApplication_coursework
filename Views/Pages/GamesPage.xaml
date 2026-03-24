@@ -12,6 +12,19 @@
 
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding Games}">
+            <CollectionView.EmptyView>
+                <Frame Padding="16" Margin="0,12,0,0">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="No games found"
+                            FontSize="18"
+                            FontAttributes="Bold" />
+                        <Label Text="Try a different search term."
+                            FontSize="13"
+                            Opacity="0.8" />
+                    </VerticalStackLayout>
+                </Frame>
+            </CollectionView.EmptyView>
+            
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Padding="10" Margin="0,4,0,8">
