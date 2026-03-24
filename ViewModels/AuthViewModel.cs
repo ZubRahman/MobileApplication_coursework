@@ -83,6 +83,9 @@ public class AuthViewModel : BaseViewModel
             var unsynced = await _repo.GetUnsyncedEntriesAsync();
             await _supabaseService.SyncUnsyncedLocalEntriesAsync(unsynced, _repo);
 
+            var pendingUpdates = await _repo.GetEntriesNeedingSyncAsync();
+            await _supabaseService.SyncPendingUpdatesAsync(pendingUpdates, _repo);
+
             await _supabaseService.PullCloudEntriesToLocalAsync(_repo);
 
             StatusMessage = "Logged in successfully. Local and cloud entries synced.";

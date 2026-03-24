@@ -18,8 +18,8 @@ public interface ISupabaseService
     Task UpdateDiaryEntryAsync(DiaryEntry entry);
     Task DeleteDiaryEntryAsync(DiaryEntry entry);
     Task SyncUnsyncedLocalEntriesAsync(List<DiaryEntry> localEntries, IDiaryRepository repo);
+    Task SyncPendingUpdatesAsync(List<DiaryEntry> localEntries, IDiaryRepository repo);
     Task PullCloudEntriesToLocalAsync(IDiaryRepository repo);
-
     string? GetCurrentUserId();
     string? GetCurrentUserEmail();
 }

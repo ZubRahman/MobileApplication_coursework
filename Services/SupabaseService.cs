@@ -166,6 +166,26 @@ public class SupabaseService : ISupabaseService
             }
         }
     }
+    public async Task SyncPendingUpdatesAsync(List<DiaryEntry> localEntries, IDiaryRepository repo)
+    {
+        foreach (var localEntry in localEntries)
+        {
+            try
+            {
+                if (localEntry.CloudId is null)
+                    continue;
+
+                await UpdateDiaryEntryAsync(localEntry);
+
+                localEntry.NeedsSync = false;
+                await repo.UpdateEntryAsync(localEntry);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Update sync failed for local entry {localEntry.Id}: {ex}");
+            }
+        }
+    }
 
     public async Task PullCloudEntriesToLocalAsync(IDiaryRepository repo)
     {

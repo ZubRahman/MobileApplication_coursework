@@ -11,5 +11,6 @@ public interface IDiaryRepository
     Task UpdateEntryAsync(DiaryEntry entry);
     Task DeleteEntryAsync(int id);
     Task<List<DiaryEntry>> GetUnsyncedEntriesAsync();
+    Task<List<DiaryEntry>> GetEntriesNeedingSyncAsync();
     Task<DiaryEntry?> GetByCloudIdAsync(long cloudId);
 }

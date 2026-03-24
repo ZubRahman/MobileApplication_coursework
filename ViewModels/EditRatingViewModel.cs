@@ -86,6 +86,7 @@ public class EditRatingViewModel : BaseViewModel
                 var entry = new DiaryEntry
                 {
                     UserId = _supabaseService.GetCurrentUserId() ?? string.Empty,
+                    NeedsSync = true,
                     GameId = GameId,
                     GameTitle = GameTitle,
                     Rating = (int)Math.Round(Rating),
@@ -98,12 +99,12 @@ public class EditRatingViewModel : BaseViewModel
                 try
                 {
                     var cloudSaved = await _supabaseService.AddDiaryEntryAsync(entry);
-                    System.Diagnostics.Debug.WriteLine($"Cloud saved id: {cloudSaved?.CloudId}, user: {cloudSaved?.UserId}");
-
+                    
                     if (cloudSaved is not null)
                     {
                         entry.CloudId = cloudSaved.CloudId;
                         entry.UserId = cloudSaved.UserId;
+                        entry.NeedsSync = false;
                         await _repo.UpdateEntryAsync(entry);
                     }
                 }
@@ -121,12 +122,15 @@ public class EditRatingViewModel : BaseViewModel
                 existing.Rating = (int)Math.Round(Rating);
                 existing.Review = Review;
                 existing.PlayedOn = DateTime.Now;
+                existing.NeedsSync = true;
 
                 await _repo.UpdateEntryAsync(existing);
 
                 try
                 {
                     await _supabaseService.UpdateDiaryEntryAsync(existing);
+                    existing.NeedsSync = false;
+                    await _repo.UpdateEntryAsync(existing);
                 }
                 catch (Exception ex)
                 {

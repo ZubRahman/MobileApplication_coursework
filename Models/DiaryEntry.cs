@@ -9,7 +9,9 @@ public class DiaryEntry
 
     public long? CloudId { get; set; }
     public string UserId { get; set; } = string.Empty;
+    public bool NeedsSync {get; set;}
 
+    [Indexed]
     public string GameId { get; set; } = string.Empty;
     public string GameTitle { get; set; } = string.Empty;
 
