@@ -5,25 +5,36 @@
              Title="Log In">
 
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="12">
+        <VerticalStackLayout Padding="16" Spacing="16">
 
             <Label Text="Log In"
-                   FontSize="24"
+                   FontSize="26"
                    FontAttributes="Bold" />
 
-            <Entry Placeholder="Email"
-                   Keyboard="Email"
-                   Text="{Binding Email}" />
+            <Label Text="Access your synced diary."
+                   FontSize="14"
+                   Opacity="0.75" />
 
-            <Entry Placeholder="Password"
-                   IsPassword="True"
-                   Text="{Binding Password}" />
+            <Frame Padding="14">
+                <VerticalStackLayout Spacing="12">
 
-            <Button Text="Log In"
-                    Command="{Binding SignInCommand}" />
+                    <Entry Placeholder="Email"
+                           Keyboard="Email"
+                           Text="{Binding Email}" />
 
-            <Label Text="{Binding StatusMessage}"
-                   LineBreakMode="WordWrap" />
+                    <Entry Placeholder="Password"
+                           IsPassword="True"
+                           Text="{Binding Password}" />
+
+                    <Button Text="Log In"
+                            Command="{Binding SignInCommand}" />
+
+                    <Label Text="{Binding StatusMessage}"
+                           LineBreakMode="WordWrap"
+                           FontSize="13" />
+
+                </VerticalStackLayout>
+            </Frame>
 
         </VerticalStackLayout>
     </ScrollView>

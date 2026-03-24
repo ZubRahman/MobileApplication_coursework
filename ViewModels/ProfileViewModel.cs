@@ -10,7 +10,7 @@ public class ProfileViewModel : BaseViewModel
 {
     public ICommand OpenSignUpCommand { get; }
     public ICommand SyncNowCommand { get; }
-    private string _syncStatusMessage = string.Empty;
+    private string _syncStatusMessage = "Ready to sync.";
     public string SyncStatusMessage
     {
         get => _syncStatusMessage;
