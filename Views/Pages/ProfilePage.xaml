@@ -22,6 +22,11 @@
             Command="{Binding LogOutCommand}"
             IsVisible="{Binding IsLoggedIn}" />
 
+            <Button Text="Sync now"
+            Command="{Binding SyncNowCommand}" />
+            <Label Text="{Binding SyncStatusMessage}"
+            LineBreakMode="WordWrap" />
+
             <Label Text="Total Logs" FontAttributes="Bold" />
             <Label Text="{Binding TotalLogs}" />
 

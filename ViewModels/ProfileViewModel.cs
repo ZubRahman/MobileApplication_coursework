@@ -8,6 +8,13 @@ namespace MyMauiApp.ViewModels;
 
 public class ProfileViewModel : BaseViewModel
 {
+    public ICommand SyncNowCommand { get; }
+    private string _syncStatusMessage = string.Empty;
+    public string SyncStatusMessage
+    {
+        get => _syncStatusMessage;
+        set => SetProperty(ref _syncStatusMessage, value);
+    }
     private readonly IDiaryRepository _repo;
     private readonly ISupabaseService _supabaseService;
 
@@ -39,6 +46,39 @@ public class ProfileViewModel : BaseViewModel
         set => SetProperty(ref _averageRating, value);
     }
 
+    private async Task SyncNow()
+    {
+        if (IsBusy) return;
+
+        try
+        {
+            var userId = _supabaseService.GetCurrentUserId();
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                SyncStatusMessage = "Log in to sync your diary.";
+                return;
+            }
+
+            IsBusy = true;
+            ((Command)SyncNowCommand).ChangeCanExecute();
+
+            await _supabaseService.SyncAllAsync(_repo);
+            await LoadProfileAsync();
+
+            SyncStatusMessage = "Sync complete.";
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+            SyncStatusMessage = $"Sync failed: {ex.Message}";
+        }
+        finally
+        {
+            IsBusy = false;
+            ((Command)SyncNowCommand).ChangeCanExecute();
+        }
+    }
+
     public ProfileViewModel(IDiaryRepository repo, ISupabaseService supabaseService)
     {
         _repo = repo;
@@ -46,6 +86,7 @@ public class ProfileViewModel : BaseViewModel
 
         OpenLoginCommand = new Command(async () => await OpenLogin());
         LogOutCommand = new Command(async () => await LogOut());
+        SyncNowCommand = new Command(async () => await SyncNow(), () => !IsBusy);
 
         _ = LoadProfileAsync();
     }

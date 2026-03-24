@@ -156,6 +156,7 @@ public class SupabaseService : ISupabaseService
                 {
                     localEntry.CloudId = cloudSaved.CloudId;
                     localEntry.UserId = cloudSaved.UserId;
+                    localEntry.NeedsSync = false;
 
                     await repo.UpdateEntryAsync(localEntry);
                 }
@@ -204,6 +205,7 @@ public class SupabaseService : ISupabaseService
                 {
                     CloudId = cloudEntry.CloudId,
                     UserId = cloudEntry.UserId,
+                    NeedsSync = false,
                     GameId = cloudEntry.GameId,
                     GameTitle = cloudEntry.GameTitle,
                     Rating = cloudEntry.Rating,
@@ -214,7 +216,14 @@ public class SupabaseService : ISupabaseService
             }
             else
             {
+                if (existingLocal.NeedsSync)
+                {
+                    continue;
+                }
+
+                existingLocal.CloudId = cloudEntry.CloudId;
                 existingLocal.UserId = cloudEntry.UserId;
+                existingLocal.NeedsSync = false;
                 existingLocal.GameId = cloudEntry.GameId;
                 existingLocal.GameTitle = cloudEntry.GameTitle;
                 existingLocal.Rating = cloudEntry.Rating;
@@ -225,6 +234,17 @@ public class SupabaseService : ISupabaseService
                 await repo.UpdateEntryAsync(existingLocal);
             }
         }
+    }
+
+    public async Task SyncAllAsync(IDiaryRepository repo)
+    {
+        var unsynced = await repo.GetUnsyncedEntriesAsync();
+        await SyncUnsyncedLocalEntriesAsync(unsynced, repo);
+
+        var pendingUpdates = await repo.GetEntriesNeedingSyncAsync();
+        await SyncPendingUpdatesAsync(pendingUpdates, repo);
+
+        await PullCloudEntriesToLocalAsync(repo);
     }
     
     
