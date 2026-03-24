@@ -14,5 +14,8 @@
         <ShellContent Title="Profile"
               Route="profile"
               ContentTemplate="{DataTemplate pages:ProfilePage}" />
+        <ShellContent Title="Stats"
+              Route="stats"
+              ContentTemplate="{DataTemplate pages:StatsPage}" />
     </TabBar>
 </Shell>
