@@ -32,7 +32,7 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Padding="12"
+                    <Frame Padding="14"
                            Margin="0,4,0,8">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer
@@ -40,16 +40,18 @@
                                 CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
 
-                        <VerticalStackLayout Spacing="6">
+                        <VerticalStackLayout Spacing="8">
                             <Label Text="{Binding GameTitle}"
-                                   FontSize="18"
+                                   FontSize="19"
                                    FontAttributes="Bold" />
 
                             <HorizontalStackLayout Spacing="14">
                                 <Label Text="{Binding Rating, StringFormat='Rating: {0}/10'}"
-                                       FontSize="13" />
+                                       FontSize="13"
+                                       FontAttributes="Bold" />
                                 <Label Text="{Binding PlayedOn, StringFormat='Date: {0:dd MMM yyyy}'}"
-                                       FontSize="13" />
+                                       FontSize="13"
+                                       Opacity="0.85" />
                             </HorizontalStackLayout>
 
                             <Label Text="{Binding Review}"

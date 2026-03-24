@@ -1,9 +1,12 @@
 using System.Windows.Input;
+using MyMauiApp.Services.Interfaces;
 
 namespace MyMauiApp.ViewModels;
 
 public class DiaryEntryDetailsViewModel : BaseViewModel
 {
+    private readonly IGameCatalogService _gameCatalogService;
+
     public int? EntryId { get; set; }
     public long? CloudId { get; set; }
     public string GameId { get; set; } = string.Empty;
@@ -36,11 +39,33 @@ public class DiaryEntryDetailsViewModel : BaseViewModel
         set => SetProperty(ref _playedOn, value);
     }
 
+    private string _coverUrl = string.Empty;
+    public string CoverUrl
+    {
+        get => _coverUrl;
+        set => SetProperty(ref _coverUrl, value);
+    }
+
     public ICommand EditCommand { get; }
 
-    public DiaryEntryDetailsViewModel()
+    public DiaryEntryDetailsViewModel(IGameCatalogService gameCatalogService)
     {
+        _gameCatalogService = gameCatalogService;
         EditCommand = new Command(async () => await OpenEditPage());
+    }
+
+    public async Task LoadCoverAsync()
+    {
+        if (string.IsNullOrWhiteSpace(GameId))
+            return;
+
+        var games = await _gameCatalogService.GetGamesAsync();
+        var match = games.FirstOrDefault(g => g.Id == GameId);
+
+        if (match is not null)
+        {
+            CoverUrl = match.CoverUrl;
+        }
     }
 
     private async Task OpenEditPage()

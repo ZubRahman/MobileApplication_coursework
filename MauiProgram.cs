@@ -46,6 +46,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<SignUpPage>();
 		builder.Services.AddTransient<StatsViewModel>();
 		builder.Services.AddTransient<StatsPage>();
+		
 
 		builder.Services.AddSingleton<AppDb>();
 		builder.Services.AddSingleton<IDiaryRepository, DiaryRepository>();

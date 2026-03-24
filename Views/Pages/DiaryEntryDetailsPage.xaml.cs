@@ -64,6 +64,7 @@ public partial class DiaryEntryDetailsPage : ContentPage
         {
             _gameId = Uri.UnescapeDataString(value ?? string.Empty);
             _vm.GameId = _gameId;
+            _ = _vm.LoadCoverAsync();
         }
     }
 
