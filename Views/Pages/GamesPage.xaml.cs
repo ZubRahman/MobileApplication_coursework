@@ -1,19 +1,25 @@
+using MyMauiApp.Models;
 using MyMauiApp.ViewModels;
 
 namespace MyMauiApp.Views.Pages;
 
 public partial class GamesPage : ContentPage
 {
-    public GamesPage()
+    private readonly GamesViewModel _vm;
+
+    public GamesPage(GamesViewModel vm)
     {
         InitializeComponent();
-
-        var services = Application.Current?.Handler?.MauiContext?.Services;
-        BindingContext = services?.GetService(typeof(GamesViewModel)) as GamesViewModel;
+        _vm = vm;
+        BindingContext = _vm;
     }
 
-    public GamesPage(GamesViewModel vm) : this()
+    private async void OnGameTapped(object? sender, TappedEventArgs e)
     {
-        BindingContext = vm;
+        if (e.Parameter is not Game game)
+            return;
+
+        await Shell.Current.GoToAsync(
+            $"gamedetails?gameId={Uri.EscapeDataString(game.Id)}");
     }
 }

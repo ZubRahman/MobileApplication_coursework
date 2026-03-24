@@ -6,7 +6,7 @@
     "genre": "Simulation, RPG",
     "releaseDate": "2015-02-13",
     "summary": "The Escapists provides players the opportunity of experiencing a light-hearted insight into everyday prison life with the main objective being that of escaping!",
-    "coverUrl": "https://www.pcgamingwiki.com/wiki/File:The_Escapists_-_Cover.jpg"
+    "coverUrl": "the_escapists.jpg"
   },
   {
     "id": "The-Escapists-2",
@@ -15,7 +15,7 @@
     "genre": "Simulation, RPG",
     "releaseDate": "2017-08-22",
     "summary": "Craft, Steal, Brawl and Escape! It’s time to bust out of the toughest prisons in the world as you return to the life of an inmate in The Escapists 2, now with multiplayer! Have you got what it takes to escape?",
-    "coverUrl": ""
+    "coverUrl": "the_escapists_2.jpg"
   },
   {
     "id": "Red-Dead-Redemption-2",
@@ -24,7 +24,7 @@
     "genre": "ACTION, ADVENTURE, OPEN WORLD",
     "releaseDate": "2018-10-26",
     "summary": "Arthur Morgan and the Van der Linde Gang are outlaws on the run. With federal agents and bounty hunters massing on their heels, the gang must rob, steal, and fight their way across the rugged heartland in order to survive.",
-    "coverUrl": ""
+    "coverUrl": "red_dead_redemption_2.jpg"
   },
   {
     "id": "The-Swindle",
@@ -33,7 +33,7 @@
     "genre": "Simulation, RPG",
     "releaseDate": "2015-07-28",
     "summary": "The Swindle is a steampunk cybercrime caper about breaking into buildings, hacking their systems, stealing all their cash, and quickly running away again before the police show up.",
-    "coverUrl": ""
+    "coverUrl": "the_swindle.jpg"
   },
   {
     "id": "Hollow-Knight",
@@ -42,7 +42,7 @@
     "genre": "METROIDVANIA, ACTION, ADVENTURE",
     "releaseDate": "2017-02-24",
     "summary": "Forge your own path in Hollow Knight! An epic action adventure through a vast ruined kingdom of insects and heroes. Explore twisting caverns, battle tainted creatures and befriend bizarre bugs, all in a classic, hand-drawn 2D style.",
-    "coverUrl": ""
+    "coverUrl": "hollow_knight.jpg"
   },
   {
     "id": "Hollow-Knight-Silksong",
@@ -51,7 +51,7 @@
     "genre": "METROIDVANIA, ACTION, ADVENTURE",
     "releaseDate": "2025-09-04",
     "summary": "Discover a vast, haunted kingdom in Hollow Knight: Silksong! Explore, fight and survive as you ascend to the peak of a land ruled by silk and song.",
-    "coverUrl": ""
+    "coverUrl": "hollow_knight_silksong.jpg"
 },
   {
     "id": "The-Legend-of-Zelda-Majoras-Mask",
@@ -60,7 +60,7 @@
     "genre": "ACTION, ADVENTURE",
     "releaseDate": "2000-04-27",
     "summary": "A few months after Ocarina of Time, the character Link arrives in a parallel world, Termina, and becomes embroiled in a quest to prevent the moon from crashing in three days' time.",
-    "coverUrl": ""
+    "coverUrl": "the_legend_of_zelda_majoras_mask.jpg"
   },
   {
     "id": "Elden-Ring",
@@ -69,6 +69,6 @@
     "genre": "ACTION, ADVENTURE, OPEN WORLD, SOULS-LIKE",
     "releaseDate": "2022-02-24",
     "summary": "THE CRITICALLY ACCLAIMED FANTASY ACTION RPG. Rise, Tarnished, and be guided by grace to brandish the power of the Elden Ring and become an Elden Lord in the Lands Between.",
-    "coverUrl": ""
+    "coverUrl": "elden_ring.jpg"
   }
 ]

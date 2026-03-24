@@ -2,7 +2,7 @@ using MyMauiApp.ViewModels;
 
 namespace MyMauiApp.Views.Pages;
 
-[QueryProperty(nameof(GameId), "id")]
+[QueryProperty(nameof(GameId), "gameId")]
 public partial class GameDetailsPage : ContentPage
 {
     private readonly GameDetailsViewModel _vm;

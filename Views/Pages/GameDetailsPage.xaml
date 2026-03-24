@@ -5,16 +5,30 @@
              Title="Game Details">
 
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="10">
+        <VerticalStackLayout Padding="16" Spacing="14">
 
-            <Label Text="{Binding GameTitle}" FontSize="24" FontAttributes="Bold" />
-            <HorizontalStackLayout Spacing="12">
-                <Label Text="{Binding GamePlatform}" FontSize="14" />
-                <Label Text="•" FontSize="14" />
-                <Label Text="{Binding GameGenre}" FontSize="14" />
-            </HorizontalStackLayout>
-            <Label Text="{Binding GameSummary}" FontSize="14" />
-            <Button Text="Rate / Review" Command="{Binding OpenRateCommand}" />
+            <Image Source="{Binding GameCoverUrl}"
+                   HeightRequest="260"
+                   Aspect="AspectFit"
+                   HorizontalOptions="Center" />
+
+            <Label Text="{Binding GameTitle}"
+                   FontSize="28"
+                   FontAttributes="Bold" />
+
+            <Label Text="{Binding GamePlatform}"
+                   FontSize="14"
+                   Opacity="0.8" />
+
+            <Label Text="{Binding GameGenre}"
+                   FontSize="14"
+                   Opacity="0.8" />
+
+            <Label Text="{Binding GameSummary}"
+                   FontSize="14" />
+
+            <Button Text="Rate / Review"
+                    Command="{Binding OpenRateCommand}" />
 
         </VerticalStackLayout>
     </ScrollView>
