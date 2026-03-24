@@ -4,25 +4,27 @@
              x:Class="MyMauiApp.Views.Pages.DiaryPage"
              Title="Diary">
 
-    <Grid Padding="10" RowDefinitions="Auto,Auto,Auto,*">
+    <Grid Padding="14" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="10">
 
         <Label Grid.Row="0"
                Text="My Diary"
-               FontSize="22"
-               FontAttributes="Bold" />
+               FontSize="24"
+               FontAttributes="Bold"
+               Margin="0,4,0,2" />
 
         <Picker Grid.Row="1"
                 Title="View mode"
                 ItemsSource="{Binding ViewModes}"
                 SelectedItem="{Binding SelectedViewMode}" />
-        
+
         <Picker Grid.Row="2"
                 Title="Sort by"
                 ItemsSource="{Binding SortOptions}"
                 SelectedItem="{Binding SelectedSort}" />
 
         <CollectionView Grid.Row="3"
-                        ItemsSource="{Binding Entries}">
+                        ItemsSource="{Binding Entries}"
+                        Margin="0,4,0,0">
             <CollectionView.EmptyView>
                 <Label Text="No diary entries yet. Rate a game to add one."
                        Padding="10" />
@@ -30,7 +32,8 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Padding="10" Margin="6">
+                    <Frame Padding="12"
+                           Margin="0,4,0,8">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditEntryCommand}"
@@ -39,20 +42,21 @@
 
                         <VerticalStackLayout Spacing="6">
                             <Label Text="{Binding GameTitle}"
-                                FontSize="18"
-                                FontAttributes="Bold" />
+                                   FontSize="18"
+                                   FontAttributes="Bold" />
 
-                            <HorizontalStackLayout Spacing="12">
+                            <HorizontalStackLayout Spacing="14">
                                 <Label Text="{Binding Rating, StringFormat='Rating: {0}/10'}"
-                                    FontSize="13" />
+                                       FontSize="13" />
                                 <Label Text="{Binding PlayedOn, StringFormat='Date: {0:dd MMM yyyy}'}"
-                                    FontSize="13" />
+                                       FontSize="13" />
                             </HorizontalStackLayout>
 
                             <Label Text="{Binding Review}"
-                                FontSize="12"
-                                LineBreakMode="TailTruncation"
-                                MaxLines="1" />
+                                   FontSize="12"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="1"
+                                   Opacity="0.8" />
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>

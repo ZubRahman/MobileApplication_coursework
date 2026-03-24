@@ -2,38 +2,48 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMauiApp.Views.Pages.EditRatingPage"
-             Title="Diary Entry">
+             Title="Edit Entry">
 
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="14">
+        <VerticalStackLayout Padding="16" Spacing="16">
 
             <Label Text="{Binding GameTitle}"
                    FontSize="24"
                    FontAttributes="Bold" />
 
-            <Label Text="Your Rating"
-                   FontAttributes="Bold" />
+            <Frame Padding="14">
+                <VerticalStackLayout Spacing="12">
 
-            <Slider Minimum="1"
-                    Maximum="10"
-                    Value="{Binding Rating}" />
+                    <Label Text="Your Rating"
+                           FontAttributes="Bold"
+                           FontSize="15" />
 
-            <Label Text="{Binding Rating, StringFormat='{}{0:F0}/10'}"
-                   FontSize="16" />
+                    <Slider Minimum="1"
+                            Maximum="10"
+                            Value="{Binding Rating}" />
 
-            <Label Text="Full Review"
-                   FontAttributes="Bold" />
+                    <Label Text="{Binding Rating, StringFormat='{}{0:F0}/10'}"
+                           FontSize="16" />
 
-            <Editor Text="{Binding Review}"
-                    AutoSize="TextChanges"
-                    HeightRequest="180"
-                    Placeholder="Write your thoughts here..." />
+                    <Label Text="Full Review"
+                           FontAttributes="Bold"
+                           FontSize="15" />
 
-            <Button Text="Save"
-                    Command="{Binding SaveCommand}" />
+                    <Editor Text="{Binding Review}"
+                            AutoSize="TextChanges"
+                            HeightRequest="180"
+                            Placeholder="Write your thoughts here..." />
 
-            <Button Text="Delete"
-                    Command="{Binding DeleteCommand}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <VerticalStackLayout Spacing="10">
+                <Button Text="Save"
+                        Command="{Binding SaveCommand}" />
+
+                <Button Text="Delete"
+                        Command="{Binding DeleteCommand}" />
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>
