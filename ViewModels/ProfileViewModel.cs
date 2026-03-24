@@ -46,6 +46,19 @@ public class ProfileViewModel : BaseViewModel
         get => _averageRating;
         set => SetProperty(ref _averageRating, value);
     }
+    private string _highestRatedGame = "N/A";
+    public string HighestRatedGame
+    {
+        get => _highestRatedGame;
+        set => SetProperty(ref _highestRatedGame, value);
+    }
+
+    private string _mostLoggedGame = "N/A";
+    public string MostLoggedGame
+    {
+        get => _mostLoggedGame;
+        set => SetProperty(ref _mostLoggedGame, value);
+    }
 
     private async Task SyncNow()
     {
@@ -137,6 +150,29 @@ public class ProfileViewModel : BaseViewModel
 
             TotalLogs = entries.Count;
             AverageRating = entries.Count > 0 ? entries.Average(e => e.Rating) : 0;
+
+            if (entries.Count > 0)
+            {
+                var highestRated = entries
+                    .OrderByDescending(e => e.Rating)
+                    .ThenByDescending(e => e.PlayedOn)
+                    .First();
+
+                HighestRatedGame = $"{highestRated.GameTitle} ({highestRated.Rating}/10)";
+
+                var mostLogged = entries
+                    .GroupBy(e => e.GameTitle)
+                    .OrderByDescending(g => g.Count())
+                    .ThenBy(g => g.Key)
+                    .First();
+
+                MostLoggedGame = $"{mostLogged.Key} ({mostLogged.Count()} logs)";
+            }
+            else
+            {
+                HighestRatedGame = "N/A";
+                MostLoggedGame = "N/A";
+            }
         }
         catch (Exception ex)
         {
