@@ -43,6 +43,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<EditRatingPage>();
 		builder.Services.AddTransient<DiaryEntryDetailsViewModel>();
 		builder.Services.AddTransient<DiaryEntryDetailsPage>();
+		builder.Services.AddTransient<SignUpPage>();
 
 		builder.Services.AddSingleton<AppDb>();
 		builder.Services.AddSingleton<IDiaryRepository, DiaryRepository>();

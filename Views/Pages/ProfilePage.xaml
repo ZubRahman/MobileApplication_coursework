@@ -29,9 +29,13 @@
                     <Label Text="{Binding UserEmail}"
                            FontSize="14" />
 
-                    <Button Text="Open Login"
-                            Command="{Binding OpenLoginCommand}"
-                            IsVisible="{Binding IsLoggedOut}" />
+                    <Button Text="Log In"
+                    Command="{Binding OpenLoginCommand}"
+                    IsVisible="{Binding IsLoggedOut}" />
+
+                    <Button Text="Sign Up"
+                    Command="{Binding OpenSignUpCommand}"
+                    IsVisible="{Binding IsLoggedOut}" />
 
                     <Button Text="Log Out"
                             Command="{Binding LogOutCommand}"
@@ -45,7 +49,7 @@
                            FontSize="18"
                            FontAttributes="Bold" />
 
-                    <Button Text="Sync now"
+                    <Button Text="Sync Now"
                             Command="{Binding SyncNowCommand}" />
 
                     <Label Text="{Binding SyncStatusMessage}"

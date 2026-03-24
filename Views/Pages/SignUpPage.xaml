@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyMauiApp.Views.Pages.LoginPage"
-             Title="Log In">
+             x:Class="MyMauiApp.Views.Pages.SignUpPage"
+             Title="Sign Up">
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="12">
 
-            <Label Text="Log In"
+            <Label Text="Sign Up"
                    FontSize="24"
                    FontAttributes="Bold" />
 
@@ -19,8 +19,8 @@
                    IsPassword="True"
                    Text="{Binding Password}" />
 
-            <Button Text="Log In"
-                    Command="{Binding SignInCommand}" />
+            <Button Text="Sign Up"
+                    Command="{Binding SignUpCommand}" />
 
             <Label Text="{Binding StatusMessage}"
                    LineBreakMode="WordWrap" />

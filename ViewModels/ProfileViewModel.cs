@@ -8,6 +8,7 @@ namespace MyMauiApp.ViewModels;
 
 public class ProfileViewModel : BaseViewModel
 {
+    public ICommand OpenSignUpCommand { get; }
     public ICommand SyncNowCommand { get; }
     private string _syncStatusMessage = string.Empty;
     public string SyncStatusMessage
@@ -87,10 +88,16 @@ public class ProfileViewModel : BaseViewModel
         _supabaseService = supabaseService;
 
         OpenLoginCommand = new Command(async () => await OpenLogin());
+        OpenSignUpCommand = new Command(async () => await OpenSignUp());
         LogOutCommand = new Command(async () => await LogOut());
         SyncNowCommand = new Command(async () => await SyncNow(), () => !IsBusy);
 
         _ = LoadProfileAsync();
+    }
+    
+    private async Task OpenSignUp()
+    {
+        await Shell.Current.GoToAsync("signup");
     }
 
     public async Task LoadProfileAsync()

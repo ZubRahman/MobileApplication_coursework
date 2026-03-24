@@ -55,7 +55,7 @@ public class AuthViewModel : BaseViewModel
             RefreshCommandStates();
 
             await _supabaseService.SignUpAsync(Email, Password);
-            StatusMessage = "Sign up succeeded. If email confirmation is enabled, check your inbox.";
+            StatusMessage = "Sign up succeeded. You can now log in.";
         }
         catch (Exception ex)
         {
@@ -78,7 +78,9 @@ public class AuthViewModel : BaseViewModel
             RefreshCommandStates();
 
             await _supabaseService.SignInAsync(Email, Password);
-            StatusMessage = "Logged in successfully. Press Sync now to sync your diary.";
+            StatusMessage = "Logged in successfully.";
+
+            await Shell.Current.GoToAsync("..");
         }
         catch (Exception ex)
         {
