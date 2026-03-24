@@ -28,6 +28,7 @@
                    FontSize="14" />
 
             <Button Text="Rate / Review"
+            Style="{StaticResource PrimaryButtonStyle}"
                     Command="{Binding OpenRateCommand}" />
 
         </VerticalStackLayout>
