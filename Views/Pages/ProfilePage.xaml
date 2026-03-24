@@ -5,34 +5,75 @@
              Title="Profile">
 
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="12">
-            <Label Text="Profile" FontSize="24" FontAttributes="Bold" />
+        <VerticalStackLayout Padding="16" Spacing="16">
 
-            <Label Text="Auth Status" FontAttributes="Bold" />
-            <Label Text="{Binding AuthStatus}" />
+            <Label Text="Profile"
+                   FontSize="26"
+                   FontAttributes="Bold" />
 
-            <Label Text="Email" FontAttributes="Bold" />
-            <Label Text="{Binding UserEmail}" />
+            <Frame Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Account"
+                           FontSize="18"
+                           FontAttributes="Bold" />
 
-            <Button Text="Open Login"
-            Command="{Binding OpenLoginCommand}"
-            IsVisible="{Binding IsLoggedOut}" />
+                    <Label Text="Status"
+                           FontAttributes="Bold"
+                           FontSize="13" />
+                    <Label Text="{Binding AuthStatus}"
+                           FontSize="14" />
 
-            <Button Text="Log Out"
-            Command="{Binding LogOutCommand}"
-            IsVisible="{Binding IsLoggedIn}" />
+                    <Label Text="Email"
+                           FontAttributes="Bold"
+                           FontSize="13" />
+                    <Label Text="{Binding UserEmail}"
+                           FontSize="14" />
 
-            <Button Text="Sync now"
-            Command="{Binding SyncNowCommand}" />
-            <Label Text="{Binding SyncStatusMessage}"
-            LineBreakMode="WordWrap" />
+                    <Button Text="Open Login"
+                            Command="{Binding OpenLoginCommand}"
+                            IsVisible="{Binding IsLoggedOut}" />
 
-            <Label Text="Total Logs" FontAttributes="Bold" />
-            <Label Text="{Binding TotalLogs}" />
+                    <Button Text="Log Out"
+                            Command="{Binding LogOutCommand}"
+                            IsVisible="{Binding IsLoggedIn}" />
+                </VerticalStackLayout>
+            </Frame>
 
-            <Label Text="Average Rating" FontAttributes="Bold" />
-            <Label Text="{Binding AverageRating, StringFormat='{}{0:F1}'}" />
+            <Frame Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Sync"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+
+                    <Button Text="Sync now"
+                            Command="{Binding SyncNowCommand}" />
+
+                    <Label Text="{Binding SyncStatusMessage}"
+                           FontSize="13"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Stats"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+
+                    <Label Text="Diary Logs"
+                           FontAttributes="Bold"
+                           FontSize="13" />
+                    <Label Text="{Binding TotalLogs}"
+                           FontSize="14" />
+
+                    <Label Text="Average Rating"
+                           FontAttributes="Bold"
+                           FontSize="13" />
+                    <Label Text="{Binding AverageRating, StringFormat='{}{0:F1}/10'}"
+                           FontSize="14" />
+                </VerticalStackLayout>
+            </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
