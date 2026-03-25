@@ -98,21 +98,24 @@ public class EditRatingViewModel : BaseViewModel
                 };
 
                 await _repo.AddEntryAsync(entry);
-                try
+                if (!string.IsNullOrWhiteSpace(_supabaseService.GetCurrentUserId()))
                 {
-                    var cloudSaved = await _supabaseService.AddDiaryEntryAsync(entry);
-                    
-                    if (cloudSaved is not null)
+                    try
                     {
-                        entry.CloudId = cloudSaved.CloudId;
-                        entry.UserId = cloudSaved.UserId;
-                        entry.NeedsSync = false;
-                        await _repo.UpdateEntryAsync(entry);
+                        var cloudSaved = await _supabaseService.AddDiaryEntryAsync(entry);
+
+                        if (cloudSaved is not null)
+                        {
+                            entry.CloudId = cloudSaved.CloudId;
+                            entry.UserId = cloudSaved.UserId;
+                            entry.NeedsSync = false;
+                            await _repo.UpdateEntryAsync(entry);
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Supabase insert failed: {ex}");
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Supabase insert failed: {ex}");
+                    }
                 }
             }
             else
@@ -130,19 +133,22 @@ public class EditRatingViewModel : BaseViewModel
 
                 await _repo.UpdateEntryAsync(existing);
 
-                try
+                if (!string.IsNullOrWhiteSpace(_supabaseService.GetCurrentUserId()))
                 {
-                    await _supabaseService.UpdateDiaryEntryAsync(existing);
-                    existing.NeedsSync = false;
-                    await _repo.UpdateEntryAsync(existing);
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Supabase update failed: {ex}");
+                    try
+                    {
+                        await _supabaseService.UpdateDiaryEntryAsync(existing);
+                        existing.NeedsSync = false;
+                        await _repo.UpdateEntryAsync(existing);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Supabase update failed: {ex}");
+                    }
                 }
             }
 
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("../..");
         }
         catch (Exception ex)
         {
