@@ -97,14 +97,14 @@ public class StatsViewModel : BaseViewModel
                 : await _repo.GetEntriesAsync();
 
             DiaryLogs = entries.Count;
+
             TotalReviews = entries.Count(e => !string.IsNullOrWhiteSpace(e.Review));
+
             UniqueGamesLogged = entries
                 .Select(e => e.GameId)
                 .Where(id => !string.IsNullOrWhiteSpace(id))
                 .Distinct()
                 .Count();
-
-            AverageRating = entries.Count > 0 ? entries.Average(e => e.Rating) : 0;
 
             if (entries.Count > 0)
             {
@@ -112,6 +112,10 @@ public class StatsViewModel : BaseViewModel
                     .GroupBy(e => e.GameId)
                     .Select(g => g.OrderByDescending(x => x.PlayedOn).First())
                     .ToList();
+
+                AverageRating = uniqueLatestEntries.Count > 0
+                    ? uniqueLatestEntries.Average(e => e.Rating)
+                    : 0;
 
                 var highestRated = uniqueLatestEntries
                     .OrderByDescending(e => e.Rating)
@@ -156,6 +160,7 @@ public class StatsViewModel : BaseViewModel
             }
             else
             {
+                AverageRating = 0;
                 HighestRatedGame = "N/A";
                 LowestRatedGame = "N/A";
                 MostLoggedGame = "N/A";
