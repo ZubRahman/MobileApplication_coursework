@@ -133,7 +133,8 @@ public class DiaryViewModel : BaseViewModel
             $"&title={Uri.EscapeDataString(entry.GameTitle)}" +
             $"&rating={entry.Rating}" +
             $"&review={Uri.EscapeDataString(entry.Review ?? string.Empty)}" +
-            $"&playedOn={Uri.EscapeDataString(entry.PlayedOn.ToString("O"))}";
+            $"&playedOn={Uri.EscapeDataString(entry.PlayedOn.ToString("O"))}" +
+            $"&progressLevel={Uri.EscapeDataString(entry.ProgressLevel ?? string.Empty)}";
 
         await Shell.Current.GoToAsync(route);
     }
