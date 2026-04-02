@@ -35,6 +35,23 @@ public class EditRatingViewModel : BaseViewModel
         set => SetProperty(ref _review, value);
     }
 
+    private string _progressLevel = "Played a Bit";
+    public string ProgressLevel
+    {
+        get => _progressLevel;
+        set => SetProperty(ref _progressLevel, value);
+    }
+
+    public List<string> ProgressOptions { get; } = new()
+    {
+        "Abandoned",
+        "Played a Bit",
+        "Not Finished",
+        "Finished",
+        "100% Achievements",
+        "Fully Completed"
+    };
+
     public ICommand SaveCommand { get; }
     public ICommand DeleteCommand { get; }
 
@@ -60,6 +77,7 @@ public class EditRatingViewModel : BaseViewModel
             GameTitle = existing.GameTitle;
             Rating = existing.Rating;
             Review = existing.Review;
+            ProgressLevel = existing.ProgressLevel;
         }
         catch (Exception ex)
         {
@@ -92,6 +110,7 @@ public class EditRatingViewModel : BaseViewModel
                     GameTitle = GameTitle,
                     Rating = (int)Math.Round(Rating),
                     Review = Review,
+                    ProgressLevel = ProgressLevel,
                     PlayedOn = now,
                     CreatedAt = now,
                     UpdatedAt = now
@@ -127,6 +146,7 @@ public class EditRatingViewModel : BaseViewModel
                 var now = DateTime.UtcNow;
                 existing.Rating = (int)Math.Round(Rating);
                 existing.Review = Review;
+                existing.ProgressLevel = ProgressLevel;
                 existing.PlayedOn = now;
                 existing.UpdatedAt = now;
                 existing.NeedsSync = true;
