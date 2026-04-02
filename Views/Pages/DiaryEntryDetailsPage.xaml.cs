@@ -9,8 +9,21 @@ namespace MyMauiApp.Views.Pages;
 [QueryProperty(nameof(RatingValue), "rating")]
 [QueryProperty(nameof(ReviewText), "review")]
 [QueryProperty(nameof(PlayedOnValue), "playedOn")]
+[QueryProperty(nameof(ProgressLevel), "progressLevel")]
+
+
 public partial class DiaryEntryDetailsPage : ContentPage
 {
+    private string _progressLevel = string.Empty;
+    public string ProgressLevel
+    {
+        get => _progressLevel;
+        set
+        {
+            _progressLevel = Uri.UnescapeDataString(value ?? string.Empty);
+            _vm.ProgressLevel = _progressLevel;
+        }
+    }
     private readonly DiaryEntryDetailsViewModel _vm;
 
     public DiaryEntryDetailsPage(DiaryEntryDetailsViewModel vm)

@@ -8,9 +8,20 @@ namespace MyMauiApp.Views.Pages;
 [QueryProperty(nameof(GameTitle), "title")]
 [QueryProperty(nameof(RatingValue), "rating")]
 [QueryProperty(nameof(ReviewText), "review")]
+[QueryProperty(nameof(ProgressLevelValue), "progressLevel")]
 public partial class EditRatingPage : ContentPage
 {
-
+    private string _progressLevelValue = string.Empty;
+    public string ProgressLevelValue
+    {
+        get => _progressLevelValue;
+        set
+        {
+            _progressLevelValue = Uri.UnescapeDataString(value ?? string.Empty);
+            _vm.ProgressLevel = _progressLevelValue;
+        }
+    }
+    
     private string _ratingValue = string.Empty;
     public string RatingValue
     {

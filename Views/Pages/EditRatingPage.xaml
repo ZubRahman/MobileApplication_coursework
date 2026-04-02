@@ -25,6 +25,14 @@
                     <Label Text="{Binding Rating, StringFormat='{}{0:F0}/10'}"
                            FontSize="16" />
 
+                    <Label Text="Progress Level"
+                        FontAttributes="Bold"
+                        FontSize="15" />
+
+                    <Picker Title="Select progress level"
+                            ItemsSource="{Binding ProgressOptions}"
+                            SelectedItem="{Binding ProgressLevel}" />
+
                     <Label Text="Full Review"
                            FontAttributes="Bold"
                            FontSize="15" />

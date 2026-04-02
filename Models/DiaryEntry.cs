@@ -17,6 +17,7 @@ public class DiaryEntry
 
     public int Rating { get; set; }
     public string Review { get; set; } = string.Empty;
+    public string ProgressLevel { get; set; } = "Played a Bit";
 
     public DateTime PlayedOn { get; set; }
     public DateTime CreatedAt { get; set; }
