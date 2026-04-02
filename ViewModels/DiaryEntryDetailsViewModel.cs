@@ -39,6 +39,13 @@ public class DiaryEntryDetailsViewModel : BaseViewModel
         set => SetProperty(ref _playedOn, value);
     }
 
+    private string _progressLevel = "Played a Bit";
+    public string ProgressLevel
+    {
+        get => _progressLevel;
+        set => SetProperty(ref _progressLevel, value);
+    }
+
     private string _coverUrl = string.Empty;
     public string CoverUrl
     {
@@ -76,7 +83,8 @@ public class DiaryEntryDetailsViewModel : BaseViewModel
             $"&gameId={Uri.EscapeDataString(GameId)}" +
             $"&title={Uri.EscapeDataString(GameTitle)}" +
             $"&rating={Rating}" +
-            $"&review={Uri.EscapeDataString(Review ?? string.Empty)}";
+            $"&review={Uri.EscapeDataString(Review ?? string.Empty)}" +
+            $"&progressLevel={Uri.EscapeDataString(ProgressLevel)}";
 
         await Shell.Current.GoToAsync(route);
     }

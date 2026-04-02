@@ -22,6 +22,9 @@
                 <Label Text="{Binding PlayedOn, StringFormat='Date: {0:dd MMM yyyy}'}"
                        FontSize="15" />
             </HorizontalStackLayout>
+            <Label Text="{Binding ProgressLevel, StringFormat='Progress: {0}'}"
+              FontSize="14"
+              Opacity="0.85" />
 
             <Label Text="Full Review"
                    FontAttributes="Bold"
