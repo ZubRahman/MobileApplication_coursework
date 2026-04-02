@@ -35,6 +35,7 @@ public class SupabaseService : ISupabaseService
             GameTitle = entry.GameTitle,
             Rating = entry.Rating,
             Review = entry.Review,
+            ProgressLevel = entry.ProgressLevel,
             PlayedOn = entry.PlayedOn,
             CreatedAt = entry.CreatedAt,
             UpdatedAt = entry.UpdatedAt
@@ -53,6 +54,7 @@ public class SupabaseService : ISupabaseService
             GameTitle = inserted.GameTitle,
             Rating = inserted.Rating,
             Review = inserted.Review,
+            ProgressLevel = inserted.ProgressLevel,
             PlayedOn = inserted.PlayedOn,
             CreatedAt = inserted.CreatedAt,
             UpdatedAt = inserted.UpdatedAt
@@ -79,6 +81,7 @@ public class SupabaseService : ISupabaseService
             GameTitle = row.GameTitle,
             Rating = row.Rating,
             Review = row.Review,
+            ProgressLevel = row.ProgressLevel,
             PlayedOn = row.PlayedOn,
             CreatedAt = row.CreatedAt,
             UpdatedAt = row.UpdatedAt
@@ -102,6 +105,7 @@ public class SupabaseService : ISupabaseService
             GameTitle = entry.GameTitle,
             Rating = entry.Rating,
             Review = entry.Review,
+            ProgressLevel = entry.ProgressLevel,
             PlayedOn = entry.PlayedOn,
             CreatedAt = entry.CreatedAt,
             UpdatedAt = entry.UpdatedAt
@@ -242,6 +246,7 @@ public class SupabaseService : ISupabaseService
                     GameTitle = cloudEntry.GameTitle,
                     Rating = cloudEntry.Rating,
                     Review = cloudEntry.Review,
+                    ProgressLevel = cloudEntry.ProgressLevel,
                     PlayedOn = cloudEntry.PlayedOn,
                     CreatedAt = cloudEntry.CreatedAt,
                     UpdatedAt = cloudEntry.UpdatedAt
@@ -262,6 +267,7 @@ public class SupabaseService : ISupabaseService
                 existingLocal.GameTitle = cloudEntry.GameTitle;
                 existingLocal.Rating = cloudEntry.Rating;
                 existingLocal.Review = cloudEntry.Review;
+                existingLocal.ProgressLevel = cloudEntry.ProgressLevel;
                 existingLocal.PlayedOn = cloudEntry.PlayedOn;
                 existingLocal.CreatedAt = cloudEntry.CreatedAt;
                 existingLocal.UpdatedAt = cloudEntry.UpdatedAt;
