@@ -24,6 +24,9 @@ public class SupabaseDiaryEntry : BaseModel
     [Column("review")]
     public string Review { get; set; } = string.Empty;
 
+    [Column("progress_level")]
+    public string ProgressLevel { get; set; } = "Played a Bit";
+
     [Column("played_on")]
     public DateTime PlayedOn { get; set; }
 
