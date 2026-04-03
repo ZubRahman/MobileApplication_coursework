@@ -57,14 +57,20 @@
                                 <Label Text="{Binding Rating, StringFormat='Rating: {0}/10'}"
                                     FontSize="13"
                                     FontAttributes="Bold" />
+
+                                <Label Text="{Binding ProgressLevel, StringFormat='Progress: {0}'}"
+                                    FontSize="13"
+                                    TextColor="{Binding ProgressColor}" />
+
                                 <Label Text="{Binding PlayedOn, StringFormat='Date: {0:dd MMM yyyy}'}"
                                     FontSize="13"
                                     Opacity="0.85" />
                             </HorizontalStackLayout>
-
-                            <Label Text="{Binding ProgressLevel, StringFormat='Progress: {0}'}"
+                            
+                            <Label Text = "Review:"
                                 FontSize="12"
-                                Opacity="0.85" />
+                                Opacity="0.85" 
+                                FontAttributes="Bold" />
 
                             <Label Text="{Binding Review}"
                                 FontSize="12"
