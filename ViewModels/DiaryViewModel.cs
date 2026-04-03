@@ -11,6 +11,29 @@ namespace MyMauiApp.ViewModels;
 public class DiaryViewModel : BaseViewModel
 {
 
+    private string _selectedProgressFilter = "All Progress";
+    public string SelectedProgressFilter
+    {
+        get => _selectedProgressFilter;
+        set
+        {
+            if (_selectedProgressFilter == value) return;
+            _selectedProgressFilter = value;
+            _ = LoadEntriesAsync();
+        }
+    }
+
+    public List<string> ProgressFilterOptions { get; } = new()
+    {
+        "All Progress",
+        "Abandoned",
+        "Started",
+        "In Progress",
+        "Completed",
+        "100% Achievements",
+        "Completionist"
+    };
+
     private readonly IDiaryRepository _repo;
     private readonly ISupabaseService _supabaseService;
 
@@ -94,6 +117,13 @@ public class DiaryViewModel : BaseViewModel
                 entries = entries
                     .GroupBy(e => e.GameId)
                     .Select(g => g.OrderByDescending(x => x.PlayedOn).First())
+                    .ToList();
+            }
+
+            if (SelectedProgressFilter != "All Progress")
+{
+                entries = entries
+                    .Where(e => e.ProgressLevel == SelectedProgressFilter)
                     .ToList();
             }
 

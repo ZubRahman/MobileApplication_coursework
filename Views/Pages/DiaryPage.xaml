@@ -4,25 +4,41 @@
              x:Class="MyMauiApp.Views.Pages.DiaryPage"
              Title="Diary">
 
-    <Grid Padding="14" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="10">
-
+    <Grid Padding="14" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" RowSpacing="8">
         <Label Grid.Row="0"
-               Text="My Diary"
-               FontSize="24"
-               FontAttributes="Bold"
-               Margin="0,4,0,2" />
+            Text="My Diary"
+            FontSize="24"
+            FontAttributes="Bold"
+            Margin="0,4,0,2" />
 
-        <Picker Grid.Row="1"
-                Title="View mode"
+        <Label Grid.Row="1"
+            Text="View Mode"
+            FontSize="13"
+            FontAttributes="Bold" />
+
+        <Picker Grid.Row="2"
                 ItemsSource="{Binding ViewModes}"
                 SelectedItem="{Binding SelectedViewMode}" />
 
-        <Picker Grid.Row="2"
-                Title="Sort by"
+        <Label Grid.Row="3"
+            Text="Sort By"
+            FontSize="13"
+            FontAttributes="Bold" />
+
+        <Picker Grid.Row="4"
                 ItemsSource="{Binding SortOptions}"
                 SelectedItem="{Binding SelectedSort}" />
 
-        <CollectionView Grid.Row="3"
+        <Label Grid.Row="5"
+            Text="Progress Filter"
+            FontSize="13"
+            FontAttributes="Bold" />
+
+        <Picker Grid.Row="6"
+                ItemsSource="{Binding ProgressFilterOptions}"
+                SelectedItem="{Binding SelectedProgressFilter}" />
+
+        <CollectionView Grid.Row="7"
                         ItemsSource="{Binding Entries}"
                         Margin="0,4,0,0">
             <CollectionView.EmptyView>
@@ -67,7 +83,7 @@
                                     Opacity="0.85" />
                             </HorizontalStackLayout>
                             
-                            <Label Text = "Review:"
+                            <Label Text = "Review: "
                                 FontSize="12"
                                 Opacity="0.85" 
                                 FontAttributes="Bold" />
