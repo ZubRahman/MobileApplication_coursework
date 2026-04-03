@@ -21,11 +21,11 @@ public class DiaryEntry
     public Color ProgressColor => ProgressLevel switch
     {
         "Abandoned" => Colors.Red,
-        "Played a Bit" => Colors.Orange,
-        "Not Finished" => Colors.Goldenrod,
-        "Finished" => Colors.Green,
+        "Started" => Colors.Orange,
+        "In Progress" => Colors.Goldenrod,
+        "Completed" => Colors.Green,
         "100% Achievements" => Colors.ForestGreen,
-        "Fully Completed" => Colors.MediumSeaGreen,
+        "Completionist" => Colors.MediumSeaGreen,
         _ => Colors.Gray
     };
 

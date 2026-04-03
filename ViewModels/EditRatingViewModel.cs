@@ -45,11 +45,11 @@ public class EditRatingViewModel : BaseViewModel
     public List<string> ProgressOptions { get; } = new()
     {
         "Abandoned",
-        "Played a Bit",
-        "Not Finished",
-        "Finished",
+        "Started",
+        "In Progress",
+        "Completed",
         "100% Achievements",
-        "Fully Completed"
+        "Completionist"
     };
 
     public ICommand SaveCommand { get; }
