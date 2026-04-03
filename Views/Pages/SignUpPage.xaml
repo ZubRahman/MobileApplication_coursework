@@ -2,14 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMauiApp.Views.Pages.SignUpPage"
-             Title="Sign Up">
+             Title="Sign Up"
+             BackgroundColor="{StaticResource BackgroundLight}">
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="16">
 
             <Label Text="Sign Up"
-                   FontSize="26"
-                   FontAttributes="Bold" />
+                   Style="{StaticResource PageTitleStyle}" />
 
             <Label Text="Create an account to sync your diary."
                    FontSize="14"
