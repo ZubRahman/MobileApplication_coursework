@@ -1,7 +1,7 @@
 using SQLite;
 
 namespace MyMauiApp.Models;
-
+using Microsoft.Maui.Graphics;
 public class DiaryEntry
 {
     [PrimaryKey, AutoIncrement]
@@ -18,6 +18,16 @@ public class DiaryEntry
     public int Rating { get; set; }
     public string Review { get; set; } = string.Empty;
     public string ProgressLevel { get; set; } = "Played a Bit";
+    public Color ProgressColor => ProgressLevel switch
+    {
+        "Abandoned" => Colors.Red,
+        "Played a Bit" => Colors.Orange,
+        "Not Finished" => Colors.Goldenrod,
+        "Finished" => Colors.Green,
+        "100% Achievements" => Colors.ForestGreen,
+        "Fully Completed" => Colors.MediumSeaGreen,
+        _ => Colors.Gray
+    };
 
     public DateTime PlayedOn { get; set; }
     public DateTime CreatedAt { get; set; }
