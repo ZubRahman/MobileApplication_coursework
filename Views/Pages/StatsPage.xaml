@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMauiApp.Views.Pages.StatsPage"
-             Title="Stats">
+             Title="Stats"
+             BackgroundColor="{StaticResource BackgroundLight}">
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="16">
@@ -13,8 +14,7 @@
             <Frame Style="{StaticResource CardFrameStyle}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Overview"
-                           FontSize="18"
-                           FontAttributes="Bold" />
+                           Style="{StaticResource SectionTitleStyle}" />
 
                     <Label Text="Diary Logs" FontAttributes="Bold" FontSize="13" />
                     <Label Text="{Binding DiaryLogs}" FontSize="14" />
@@ -33,8 +33,7 @@
             <Frame Style="{StaticResource CardFrameStyle}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Highlights"
-                           FontSize="18"
-                           FontAttributes="Bold" />
+                           Style="{StaticResource SectionTitleStyle}" />
 
                     <Label Text="Highest Rated Game" FontAttributes="Bold" FontSize="13" />
                     <Label Text="{Binding HighestRatedGame}" FontSize="14" />
@@ -50,8 +49,7 @@
             <Frame Style="{StaticResource CardFrameStyle}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Timeline"
-                           FontSize="18"
-                           FontAttributes="Bold" />
+                           Style="{StaticResource SectionTitleStyle}" />
 
                     <Label Text="Most Recent Game" FontAttributes="Bold" FontSize="13" />
                     <Label Text="{Binding MostRecentGame}" FontSize="14" />
@@ -64,8 +62,7 @@
             <Frame Style="{StaticResource CardFrameStyle}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Rating Curve (Unique Games)"
-                        FontSize="18"
-                        FontAttributes="Bold" />
+                        Style="{StaticResource SectionTitleStyle}" />
 
                     <Label Text="{Binding RatingCurveText}"
                            FontSize="14"
