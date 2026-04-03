@@ -11,6 +11,29 @@ namespace MyMauiApp.ViewModels;
 public class DiaryViewModel : BaseViewModel
 {
 
+    private string _selectedProgressFilter = "All Progress";
+    public string SelectedProgressFilter
+    {
+        get => _selectedProgressFilter;
+        set
+        {
+            if (_selectedProgressFilter == value) return;
+            _selectedProgressFilter = value;
+            _ = LoadEntriesAsync();
+        }
+    }
+
+    public List<string> ProgressFilterOptions { get; } = new()
+    {
+        "All Progress",
+        "Abandoned",
+        "Started",
+        "In Progress",
+        "Completed",
+        "100% Achievements",
+        "Completionist"
+    };
+
     private readonly IDiaryRepository _repo;
     private readonly ISupabaseService _supabaseService;
 
@@ -97,6 +120,13 @@ public class DiaryViewModel : BaseViewModel
                     .ToList();
             }
 
+            if (SelectedProgressFilter != "All Progress")
+{
+                entries = entries
+                    .Where(e => e.ProgressLevel == SelectedProgressFilter)
+                    .ToList();
+            }
+
             entries = SelectedSort switch
             {
                 "Oldest" => entries.OrderBy(e => e.PlayedOn).ToList(),
@@ -133,7 +163,8 @@ public class DiaryViewModel : BaseViewModel
             $"&title={Uri.EscapeDataString(entry.GameTitle)}" +
             $"&rating={entry.Rating}" +
             $"&review={Uri.EscapeDataString(entry.Review ?? string.Empty)}" +
-            $"&playedOn={Uri.EscapeDataString(entry.PlayedOn.ToString("O"))}";
+            $"&playedOn={Uri.EscapeDataString(entry.PlayedOn.ToString("O"))}" +
+            $"&progressLevel={Uri.EscapeDataString(entry.ProgressLevel ?? string.Empty)}";
 
         await Shell.Current.GoToAsync(route);
     }
