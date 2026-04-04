@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMauiApp.Views.Pages.ProfilePage"
+             Title="Profile"
+             BackgroundColor="{StaticResource BackgroundLight}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <Label Text="Profile"
+              Style="{StaticResource PageTitleStyle}" />
+
+           <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Account"
+                            Style="{StaticResource SectionTitleStyle}" />
+
+                    <Label Text="Status"
+                           FontAttributes="Bold"
+                           FontSize="13" />
+                    <Label Text="{Binding AuthStatus}"
+                           FontSize="14" />
+
+                    <Label Text="Email"
+                           FontAttributes="Bold"
+                           FontSize="13" />
+                    <Label Text="{Binding UserEmail}"
+                           FontSize="14" />
+
+                    <Button Text="Log In"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding OpenLoginCommand}"
+                            IsVisible="{Binding IsLoggedOut}" />
+
+                    <Button Text="Sign Up"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding OpenSignUpCommand}"
+                            IsVisible="{Binding IsLoggedOut}" />
+
+                    <Button Text="Log Out"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding LogOutCommand}"
+                            IsVisible="{Binding IsLoggedIn}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Sync"
+                           Style="{StaticResource SectionTitleStyle}" />
+
+                    <Button Text="Sync Now"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding SyncNowCommand}" />
+
+                    <Label Text="{Binding SyncStatusMessage}"
+                           FontSize="13"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

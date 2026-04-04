@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMauiApp.Views.Pages.EditRatingPage"
+             Title="Edit Entry">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <Label Text="{Binding GameTitle}"
+                   FontSize="24"
+                   FontAttributes="Bold" />
+
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label Text="Your Rating"
+                           FontAttributes="Bold"
+                           FontSize="15" />
+
+                    <Slider Minimum="1"
+                            Maximum="10"
+                            Value="{Binding Rating}" />
+
+                    <Label Text="{Binding Rating, StringFormat='{}{0:F0}/10'}"
+                           FontSize="16" />
+
+                    <Label Text="Progress Level"
+                        FontAttributes="Bold"
+                        FontSize="15" />
+
+                    <Picker Title="Select progress level"
+                            ItemsSource="{Binding ProgressOptions}"
+                            SelectedItem="{Binding ProgressLevel}" />
+
+                    <Label Text="Full Review"
+                           FontAttributes="Bold"
+                           FontSize="15" />
+
+                    <Editor Text="{Binding Review}"
+                            AutoSize="TextChanges"
+                            HeightRequest="180"
+                            Placeholder="Write your thoughts here..." />
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <VerticalStackLayout Spacing="10">
+                <Button Text="Save"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                        Command="{Binding SaveCommand}" />
+
+                <Button Text="Delete"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                        Command="{Binding DeleteCommand}" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMauiApp.Views.Pages.DiaryPage"
+             Title="Diary">
+
+    <Grid Padding="14" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" RowSpacing="8">
+        <Label Grid.Row="0"
+            Text="My Diary"
+            FontSize="24"
+            FontAttributes="Bold"
+            Margin="0,4,0,2" />
+
+        <Label Grid.Row="1"
+            Text="View Mode"
+            FontSize="13"
+            FontAttributes="Bold" />
+
+        <Picker Grid.Row="2"
+                ItemsSource="{Binding ViewModes}"
+                SelectedItem="{Binding SelectedViewMode}" />
+
+        <Label Grid.Row="3"
+            Text="Sort By"
+            FontSize="13"
+            FontAttributes="Bold" />
+
+        <Picker Grid.Row="4"
+                ItemsSource="{Binding SortOptions}"
+                SelectedItem="{Binding SelectedSort}" />
+
+        <Label Grid.Row="5"
+            Text="Progress Filter"
+            FontSize="13"
+            FontAttributes="Bold" />
+
+        <Picker Grid.Row="6"
+                ItemsSource="{Binding ProgressFilterOptions}"
+                SelectedItem="{Binding SelectedProgressFilter}" />
+
+        <CollectionView Grid.Row="7"
+                        ItemsSource="{Binding Entries}"
+                        Margin="0,4,0,0">
+            <CollectionView.EmptyView>
+                <Frame Padding="16" Margin="0,12,0,0">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="No diary entries yet"
+                            FontSize="18"
+                            FontAttributes="Bold" />
+                        <Label Text="Browse a game and add your first rating or review."
+                            FontSize="13"
+                            Opacity="0.8" />
+                    </VerticalStackLayout>
+                </Frame>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="14"
+                        Margin="0,4,0,8">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditEntryCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{Binding GameTitle}"
+                                FontSize="19"
+                                FontAttributes="Bold" />
+
+                            <HorizontalStackLayout Spacing="14">
+                                <Label Text="{Binding Rating, StringFormat='Rating: {0}/10'}"
+                                    FontSize="13"
+                                    FontAttributes="Bold" />
+
+                                <Label Text="{Binding ProgressLevel, StringFormat='Progress: {0}'}"
+                                    FontSize="13"
+                                    TextColor="{Binding ProgressColor}" />
+
+                                <Label Text="{Binding PlayedOn, StringFormat='Date: {0:dd MMM yyyy}'}"
+                                    FontSize="13"
+                                    Opacity="0.85" />
+                            </HorizontalStackLayout>
+                            
+                            <Label Text = "Review: "
+                                FontSize="12"
+                                Opacity="0.85" 
+                                FontAttributes="Bold" />
+
+                            <Label Text="{Binding Review}"
+                                FontSize="12"
+                                LineBreakMode="TailTruncation"
+                                MaxLines="1"
+                                Opacity="0.8" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

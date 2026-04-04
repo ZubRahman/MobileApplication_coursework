@@ -1,16 +1,27 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using MyMauiApp.Services.Interfaces;
 
 namespace MyMauiApp;
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
-	}
+    public App(ISupabaseService supabaseService)
+    {
+        InitializeComponent();
+        MainPage = new AppShell();
 
-	protected override Window CreateWindow(IActivationState? activationState)
-	{
-		return new Window(new AppShell());
-	}
+        _ = InitializeSupabaseAsync(supabaseService);
+    }
+
+    private async Task InitializeSupabaseAsync(ISupabaseService supabaseService)
+    {
+        try
+        {
+            await supabaseService.InitializeAsync();
+            Console.WriteLine("Supabase initialized successfully.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Supabase init failed: {ex}");
+        }
+    }
 }

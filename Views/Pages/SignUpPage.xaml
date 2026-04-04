@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMauiApp.Views.Pages.SignUpPage"
+             Title="Sign Up"
+             BackgroundColor="{StaticResource BackgroundLight}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <Label Text="Sign Up"
+                   Style="{StaticResource PageTitleStyle}" />
+
+            <Label Text="Create an account to sync your diary."
+                   FontSize="14"
+                   Opacity="0.75" />
+
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="12">
+
+                    <Entry Placeholder="Email"
+                           Keyboard="Email"
+                           Text="{Binding Email}" />
+
+                    <Entry Placeholder="Password"
+                           IsPassword="True"
+                           Text="{Binding Password}" />
+
+                    <Button Text="Sign Up"
+                     Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding SignUpCommand}" />
+
+                    <Label Text="{Binding StatusMessage}"
+                           LineBreakMode="WordWrap"
+                           FontSize="13" />
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

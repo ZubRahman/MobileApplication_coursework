@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMauiApp.Views.Pages.StatsPage"
+             Title="Stats"
+             BackgroundColor="{StaticResource BackgroundLight}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <Label Text="Stats"
+             Style="{StaticResource PageTitleStyle}" />
+
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Overview"
+                           Style="{StaticResource SectionTitleStyle}" />
+
+                    <Label Text="Diary Logs" FontAttributes="Bold" FontSize="13" />
+                    <Label Text="{Binding DiaryLogs}" FontSize="14" />
+
+                    <Label Text="Total Reviews" FontAttributes="Bold" FontSize="13" />
+                    <Label Text="{Binding TotalReviews}" FontSize="14" />
+
+                    <Label Text="Unique Games Logged" FontAttributes="Bold" FontSize="13" />
+                    <Label Text="{Binding UniqueGamesLogged}" FontSize="14" />
+
+                    <Label Text="Average Rating" FontAttributes="Bold" FontSize="13" />
+                    <Label Text="{Binding AverageRating, StringFormat='{}{0:F1}/10'}" FontSize="14" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Highlights"
+                           Style="{StaticResource SectionTitleStyle}" />
+
+                    <Label Text="Highest Rated Game" FontAttributes="Bold" FontSize="13" />
+                    <Label Text="{Binding HighestRatedGame}" FontSize="14" />
+
+                    <Label Text="Lowest Rated Game" FontAttributes="Bold" FontSize="13" />
+                    <Label Text="{Binding LowestRatedGame}" FontSize="14" />
+
+                    <Label Text="Most Logged Game" FontAttributes="Bold" FontSize="13" />
+                    <Label Text="{Binding MostLoggedGame}" FontSize="14" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Timeline"
+                           Style="{StaticResource SectionTitleStyle}" />
+
+                    <Label Text="Most Recent Game" FontAttributes="Bold" FontSize="13" />
+                    <Label Text="{Binding MostRecentGame}" FontSize="14" />
+
+                    <Label Text="Oldest Game Log" FontAttributes="Bold" FontSize="13" />
+                    <Label Text="{Binding OldestGameLog}" FontSize="14" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Rating Curve (Unique Games)"
+                        Style="{StaticResource SectionTitleStyle}" />
+
+                    <Label Text="{Binding RatingCurveText}"
+                           FontSize="14"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
