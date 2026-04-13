@@ -3,7 +3,11 @@
 ## Overview
 This project is a mobile game diary application built in **.NET MAUI** using **C#**. It was inspired by platforms like Letterboxd, but adapted for video games instead of films. The application allows users to browse a game catalogue, log ratings and reviews, track progress, and view personalised statistics such as most rated games & a user's rating curve.
 
-Diary entries are stored locally using SQLite to support offline use, and can then be manually synced to the cloud using Supabase. The project was developed to explore core mobile development concepts including multi-page navigation, MVVM architecture, local persistence, authentication, cloud storage, and user interface design.
+Diary entries are stored locally using SQLite to support offline use, and can then be manually synced to the cloud using Supabase. The project was developed to explore core mobile development concepts, including multi-page navigation, MVVM architecture, local persistence, authentication, cloud storage, and user interface design.
+
+The application uses Supabase in two ways:
+- **Supabase Authentication** for user sign-up, log-in, and account-linked access
+- **Supabase Database API** for creating, retrieving, updating, and deleting diary entries in cloud storage
 
 ## Key Features
 - Browse a game catalogue with poster images and search functionality
